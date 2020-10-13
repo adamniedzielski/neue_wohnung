@@ -7,10 +7,12 @@ class ScrapeGewobag
 
   def call
     page = Nokogiri::HTML(http_client.get(ScrapeGewobag::URL).body)
-    page.css("article.angebot").map do |apartment|
-      {
-        address: apartment.css("address").text
-      }
+    page.css("article.angebot").map do |listing|
+      Apartment.new(
+        properties: {
+          address: listing.css("address").text
+        }
+      )
     end
   end
 

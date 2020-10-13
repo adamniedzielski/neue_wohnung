@@ -20,11 +20,18 @@ RSpec.describe ScrapeGewobag do
     expect(result.size).to eq 8
   end
 
+  it "returns Apartment instances" do
+    service = ScrapeGewobag.new(http_client: MockHTTPClient.new)
+    result = service.call
+
+    expect(result.first.class).to eq Apartment
+  end
+
   it "gets apartment address" do
     service = ScrapeGewobag.new(http_client: MockHTTPClient.new)
     result = service.call
 
-    expect(result.first.fetch(:address))
+    expect(result.first.properties.fetch("address"))
       .to eq "\n\t\t\t\tRichard-Münch-Str. 42, 13591 Berlin/Staaken\t\t\t"
   end
 end
