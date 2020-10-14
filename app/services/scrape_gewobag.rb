@@ -9,6 +9,7 @@ class ScrapeGewobag
     page = Nokogiri::HTML(http_client.get(ScrapeGewobag::URL).body)
     page.css("article.angebot").map do |listing|
       Apartment.new(
+        external_id: listing.attribute("id").value.gsub("post", "gewobag"),
         properties: {
           address: listing.css("address").text.strip
         }

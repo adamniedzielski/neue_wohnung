@@ -34,4 +34,11 @@ RSpec.describe ScrapeGewobag do
     expect(result.first.properties.fetch("address"))
       .to eq "Richard-Münch-Str. 42, 13591 Berlin/Staaken"
   end
+
+  it "assigns external identifier" do
+    service = ScrapeGewobag.new(http_client: MockHTTPClient.new)
+    result = service.call
+
+    expect(result.first.external_id).to eq "gewobag-43925"
+  end
 end
