@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 2020_10_13_081433) do
   enable_extension "plpgsql"
 
   create_table "apartments", force: :cascade do |t|
-    t.string "external_id"
+    t.string "external_id", null: false
     t.jsonb "properties", default: {}, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
