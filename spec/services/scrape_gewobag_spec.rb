@@ -32,6 +32,6 @@ RSpec.describe ScrapeGewobag do
     result = service.call
 
     expect(result.first.properties.fetch("address"))
-      .to eq "\n\t\t\t\tRichard-Münch-Str. 42, 13591 Berlin/Staaken\t\t\t"
+      .to eq "Richard-Münch-Str. 42, 13591 Berlin/Staaken"
   end
 end

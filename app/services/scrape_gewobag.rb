@@ -10,7 +10,7 @@ class ScrapeGewobag
     page.css("article.angebot").map do |listing|
       Apartment.new(
         properties: {
-          address: listing.css("address").text
+          address: listing.css("address").text.strip
         }
       )
     end
