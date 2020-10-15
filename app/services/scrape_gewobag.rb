@@ -11,7 +11,8 @@ class ScrapeGewobag
       Apartment.new(
         external_id: listing.attribute("id").value.gsub("post", "gewobag"),
         properties: {
-          address: listing.css("address").text.strip
+          address: listing.css("address").text.strip,
+          url: listing.css(".read-more-link").attribute("href").value
         }
       )
     end
