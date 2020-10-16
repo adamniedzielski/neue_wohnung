@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class GetNewApartments
   def initialize(
     scrapers: [ScrapeGewobag.new],
@@ -7,6 +9,7 @@ class GetNewApartments
     self.send_telegram_message = send_telegram_message
   end
 
+  # rubocop:disable Style/MultilineBlockChain
   def call
     scrapers
       .flat_map(&:call)
@@ -18,14 +21,15 @@ class GetNewApartments
         notify_about_new_apartment(apartment)
       end
   end
+  # rubocop:enable Style/MultilineBlockChain
 
   private
 
-  attr_accessor :scrapers
-  attr_accessor :send_telegram_message
+  attr_accessor :scrapers, :send_telegram_message
 
   def notify_about_new_apartment(apartment)
     send_telegram_message.call(
-      "New apartment: #{apartment.properties.to_s}")
+      "New apartment: #{apartment.properties}"
+    )
   end
 end

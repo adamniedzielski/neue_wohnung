@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe ScrapeGewobag do
@@ -47,6 +49,6 @@ RSpec.describe ScrapeGewobag do
     result = service.call
 
     expect(result.first.properties.fetch("url"))
-      .to eq "https://www.gewobag.de/fuer-mieter-und-mietinteressenten/mietangebote/7100-74806-0305-0076/"        
+      .to eq "https://www.gewobag.de/fuer-mieter-und-mietinteressenten/mietangebote/7100-74806-0305-0076/"
   end
 end

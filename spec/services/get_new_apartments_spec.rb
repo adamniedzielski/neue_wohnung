@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe GetNewApartments do
@@ -13,7 +15,7 @@ RSpec.describe GetNewApartments do
   end
 
   it "filters out apartments that were already scraped" do
-    old_apartment = Apartment.create!(external_id: "12345")
+    _old_apartment = Apartment.create!(external_id: "12345")
     scraper = double(call: [Apartment.new(external_id: "12345")])
     service = GetNewApartments.new(scrapers: [scraper])
 

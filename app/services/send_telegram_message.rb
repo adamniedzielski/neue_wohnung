@@ -1,4 +1,6 @@
-require 'telegram/bot'
+# frozen_string_literal: true
+
+require "telegram/bot"
 
 class SendTelegramMessage
   def call(text)
