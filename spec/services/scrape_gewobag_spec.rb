@@ -51,4 +51,12 @@ RSpec.describe ScrapeGewobag do
     expect(result.first.properties.fetch("url"))
       .to eq "https://www.gewobag.de/fuer-mieter-und-mietinteressenten/mietangebote/7100-74806-0305-0076/"
   end
+
+  it "gets the number of rooms" do
+    service = ScrapeGewobag.new(http_client: MockHTTPClient.new)
+    result = service.call
+
+    expect(result.first.properties.fetch("rooms_number"))
+      .to eq "3..4"
+  end
 end

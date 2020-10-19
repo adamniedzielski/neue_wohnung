@@ -14,7 +14,8 @@ class ScrapeGewobag
         external_id: listing.attribute("id").value.gsub("post", "gewobag"),
         properties: {
           address: listing.css("address").text.strip,
-          url: listing.css(".read-more-link").attribute("href").value
+          url: listing.css(".read-more-link").attribute("href").value,
+          rooms_number: 3..4
         }
       )
     end
