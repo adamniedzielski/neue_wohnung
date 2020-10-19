@@ -13,3 +13,5 @@ Metrics/BlockLength:
 Lint/ConstantDefinitionInBlock:
   Exclude:
     - "spec/**/*"
+Bundler/OrderedGems:
+  Enabled: false
