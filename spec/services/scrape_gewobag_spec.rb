@@ -59,4 +59,12 @@ RSpec.describe ScrapeGewobag do
     expect(result.first.properties.fetch("rooms_number"))
       .to eq "3..4"
   end
+
+  it "gets the WBS status" do
+    service = ScrapeGewobag.new(http_client: MockHTTPClient.new)
+    result = service.call
+
+    expect(result.first.properties.fetch("wbs"))
+      .to eq false
+  end
 end
