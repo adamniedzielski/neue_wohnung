@@ -1,24 +1,30 @@
-# README
+# neue_wohnung
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is an application that scrapes apartment offers from websites of
+Wohnungsbaugesellschaften in Berlin and sends notifications about them.
 
-Things you may want to cover:
+## Installation
 
-* Ruby version
+1. Install Ruby - use version from `.ruby-version` file
+2. Install PostgreSQL
+3. `bundle install`
+4. `rails db:setup`
+5. `rails console` to test that it runs
 
-* System dependencies
+## Testing
 
-* Configuration
+You need to create your own Telegram bot to run the test suite. Follow the
+instructions [here](https://core.telegram.org/bots#3-how-do-i-create-a-bot)
+and [here](https://spidermon.readthedocs.io/en/latest/howto/configuring-telegram-for-spidermon.html#steps)
+so you have `TELEGRAM_TOKEN` and `TELEGRAM_CHAT_ID`.
 
-* Database creation
+After that you can run:
 
-* Database initialization
+```
+TELEGRAM_TOKEN=your_token TELEGRAM_CHAT_ID=your_chat_id rails spec
+```
 
-* How to run the test suite
+## Deployment
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+The application is deployed to Heroku. The deployment happens automatically
+after each push to the `main` branch.
