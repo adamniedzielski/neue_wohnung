@@ -35,13 +35,11 @@ jobs:
       run: |
         sudo apt-get -yqq install libpq-dev
     - name: Install dependencies
-      env:
-        PGHOST: localhost
-        PGUSER: postgres
-        RAILS_ENV: test
       run: |
         bundle install
-        bin/rails db:setup
+    - name: Run Rubocop
+      run: |
+        bundle exec rubocop
     - name: Run tests
       env:
         PGHOST: localhost
@@ -49,4 +47,6 @@ jobs:
         RAILS_ENV: test
         TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
         TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-      run: bundle exec rake
+      run: |
+        bundle exec rails db:setup
+        bundle exec rails spec
