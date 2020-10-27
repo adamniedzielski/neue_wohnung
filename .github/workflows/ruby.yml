@@ -43,4 +43,8 @@ jobs:
         bundle install
         bin/rails db:setup
     - name: Run tests
+      env:
+        PGHOST: localhost
+        PGUSER: postgres
+        RAILS_ENV: test
       run: bundle exec rake
