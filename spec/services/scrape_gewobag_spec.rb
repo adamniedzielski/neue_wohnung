@@ -1,20 +1,9 @@
 # frozen_string_literal: true
 
 require "rails_helper"
+require "test_helpers/mock_http_client"
 
 RSpec.describe ScrapeGewobag do
-  class MockHTTPClient
-    class Response
-      def body
-        File.read(Rails.root.join("spec", "fixtures", "gewobag.html"))
-      end
-    end
-
-    def get(_url)
-      Response.new
-    end
-  end
-
   it "gets multiple apartments" do
     service = ScrapeGewobag.new(http_client: MockHTTPClient.new)
     result = service.call
