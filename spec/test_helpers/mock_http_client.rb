@@ -1,13 +1,19 @@
 # frozen_string_literal: true
 
 class MockHTTPClient
-  class Response
-    def body
-      File.read(Rails.root.join("spec", "fixtures", "gewobag.html"))
-    end
+  Response = Struct.new(:body)
+
+  def initialize(response_filename)
+    self.response_body = File.read(
+      Rails.root.join("spec", "fixtures", response_filename)
+    )
   end
 
   def get(_url)
-    Response.new
+    Response.new(response_body)
   end
+
+  private
+
+  attr_accessor :response_body
 end
