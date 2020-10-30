@@ -5,7 +5,7 @@ require "test_helpers/mock_http_client"
 
 RSpec.describe ScrapeGewobag do
   it "gets multiple apartments" do
-    http_client = MockHTTPClient.new("wrong.html")
+    http_client = MockHTTPClient.new("gewobag.html")
     service = ScrapeGewobag.new(http_client: http_client)
     result = service.call
 
@@ -13,7 +13,7 @@ RSpec.describe ScrapeGewobag do
   end
 
   it "returns Apartment instances" do
-    http_client = MockHTTPClient.new("wrong.html")
+    http_client = MockHTTPClient.new("gewobag.html")
     service = ScrapeGewobag.new(http_client: http_client)
     result = service.call
 
@@ -21,7 +21,7 @@ RSpec.describe ScrapeGewobag do
   end
 
   it "gets apartment address" do
-    http_client = MockHTTPClient.new("wrong.html")
+    http_client = MockHTTPClient.new("gewobag.html")
     service = ScrapeGewobag.new(http_client: http_client)
     result = service.call
 
@@ -30,7 +30,7 @@ RSpec.describe ScrapeGewobag do
   end
 
   it "assigns external identifier" do
-    http_client = MockHTTPClient.new("wrong.html")
+    http_client = MockHTTPClient.new("gewobag.html")
     service = ScrapeGewobag.new(http_client: http_client)
     result = service.call
 
@@ -38,7 +38,7 @@ RSpec.describe ScrapeGewobag do
   end
 
   it "gets link to the full offer" do
-    http_client = MockHTTPClient.new("wrong.html")
+    http_client = MockHTTPClient.new("gewobag.html")
     service = ScrapeGewobag.new(http_client: http_client)
     result = service.call
 
@@ -47,7 +47,7 @@ RSpec.describe ScrapeGewobag do
   end
 
   it "gets the number of rooms" do
-    http_client = MockHTTPClient.new("wrong.html")
+    http_client = MockHTTPClient.new("gewobag.html")
     service = ScrapeGewobag.new(http_client: http_client)
     result = service.call
 
@@ -56,7 +56,7 @@ RSpec.describe ScrapeGewobag do
   end
 
   it "gets the WBS status" do
-    http_client = MockHTTPClient.new("wrong.html")
+    http_client = MockHTTPClient.new("gewobag.html")
     service = ScrapeGewobag.new(http_client: http_client)
     result = service.call
 
