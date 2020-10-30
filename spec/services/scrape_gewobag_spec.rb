@@ -52,7 +52,7 @@ RSpec.describe ScrapeGewobag do
     result = service.call
 
     expect(result.first.properties.fetch("rooms_number"))
-      .to eq "3..4"
+      .to eq 3
   end
 
   it "gets the WBS status" do

@@ -15,7 +15,7 @@ class ScrapeGewobag
         properties: {
           address: listing.css("address").text.strip,
           url: listing.css(".read-more-link").attribute("href").value,
-          rooms_number: 3..4,
+          rooms_number: rooms_number(listing),
           wbs: false
         }
       )
@@ -25,4 +25,8 @@ class ScrapeGewobag
   private
 
   attr_accessor :http_client
+
+  def rooms_number(listing)
+    Integer(listing.css("li.angebot-area").text.match(/(\d*) Zimmer/)[1])
+  end
 end
