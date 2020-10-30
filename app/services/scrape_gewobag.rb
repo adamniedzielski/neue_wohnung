@@ -8,7 +8,7 @@ class ScrapeGewobag
   end
 
   def call
-    page = Nokogiri::HTML(http_client.get(ScrapeGewobag::URL).body)
+    page = Nokogiri::HTML(http_client.get(URL).body)
     page.css("article.angebot").map do |listing|
       Apartment.new(
         external_id: listing.attribute("id").value.gsub("post", "gewobag"),
