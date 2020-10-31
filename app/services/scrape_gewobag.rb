@@ -9,20 +9,26 @@ class ScrapeGewobag
 
   def call
     page = Nokogiri::HTML(http_client.get(URL).body)
-    page.css("article.angebot").map do |listing|
-      Apartment.new(
-        external_id: listing.attribute("id").value.gsub("post", "gewobag"),
-        properties: {
-          address: listing.css("address").text.strip,
-          url: listing.css(".read-more-link").attribute("href").value,
-          rooms_number: 3..4,
-          wbs: false
-        }
-      )
-    end
+    page.css("article.angebot").map { |listing| parse(listing) }
   end
 
   private
 
   attr_accessor :http_client
+
+  def parse(listing)
+    Apartment.new(
+      external_id: listing.attribute("id").value.gsub("post", "gewobag"),
+      properties: {
+        address: listing.css("address").text.strip,
+        url: listing.css(".read-more-link").attribute("href").value,
+        rooms_number: rooms_number(listing),
+        wbs: false
+      }
+    )
+  end
+
+  def rooms_number(listing)
+    Integer(listing.css("li.angebot-area").text.match(/(\d*) Zimmer/)[1])
+  end
 end
