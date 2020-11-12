@@ -49,7 +49,7 @@ RSpec.describe GetNewApartments do
     apartment = Apartment.new(
       external_id: "12345",
       properties: {
-        adddress: "Richard-Münch-Str. 42, 13591 Berlin/Staaken"
+        address: "Richard-Münch-Str. 42, 13591 Berlin/Staaken"
       }
     )
     scraper = double(call: [apartment])
@@ -62,6 +62,6 @@ RSpec.describe GetNewApartments do
     service.call
 
     expect(send_telegram_message).to have_received(:call)
-      .with('New apartment: {"adddress"=>"Richard-Münch-Str. 42, 13591 Berlin/Staaken"}')
+      .with('New apartment: {"address"=>"Richard-Münch-Str. 42, 13591 Berlin/Staaken"}')
   end
 end
