@@ -29,7 +29,27 @@ class GetNewApartments
 
   def notify_about_new_apartment(apartment)
     send_telegram_message.call(
-      "New apartment: #{apartment.properties}"
+      <<~HEREDOC
+        New apartment 🏠
+
+        Address: #{apartment.properties.fetch("address", "?")}
+        Rooms: #{apartment.properties.fetch("rooms_number", "?")}
+        WBS: #{format_wbs_status(apartment)}
+
+        #{apartment.properties.fetch("url", "no link available")}
+      HEREDOC
     )
+  end
+
+  def format_wbs_status(apartment)
+    wbs_status = apartment.properties.fetch("wbs", "?")
+
+    return wbs_status if wbs_status == "?"
+
+    if wbs_status
+      "required"
+    else
+      "not required"
+    end
   end
 end
