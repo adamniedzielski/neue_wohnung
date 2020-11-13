@@ -42,11 +42,9 @@ class GetNewApartments
   end
 
   def format_wbs_status(apartment)
-    wbs_status = apartment.properties.fetch("wbs", "?")
+    return "?" unless apartment.properties.key?("wbs")
 
-    return wbs_status if wbs_status == "?"
-
-    if wbs_status
+    if apartment.properties.fetch("wbs")
       "required"
     else
       "not required"
