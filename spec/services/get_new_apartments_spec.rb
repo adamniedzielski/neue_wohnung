@@ -65,6 +65,16 @@ RSpec.describe GetNewApartments do
     service.call
 
     expect(send_telegram_message).to have_received(:call)
-      .with("New apartment 🏠\n\nAddress: Richard-Münch-Str. 42, 13591 Berlin/Staaken\nRooms: 4\nWBS: not required\n\nhttps://www.gewobag.de/fuer-mieter-und-mietinteressenten/mietangebote/7100-74806-0305-0076/\n")
+      .with(
+        <<~HEREDOC
+          New apartment 🏠
+
+          Address: Richard-Münch-Str. 42, 13591 Berlin/Staaken
+          Rooms: 4
+          WBS: not required
+
+          https://www.gewobag.de/fuer-mieter-und-mietinteressenten/mietangebote/7100-74806-0305-0076/
+        HEREDOC
+      )
   end
 end
