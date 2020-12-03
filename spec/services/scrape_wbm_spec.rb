@@ -72,4 +72,13 @@ RSpec.describe ScrapeWbm do
     expect(result.second.properties.fetch("wbs"))
       .to eq true
   end
+
+  it "returns the absolute URL when relative is present" do
+    http_client = MockHTTPClient.new("wbm.html")
+    service = ScrapeWbm.new(http_client: http_client)
+    result = service.call
+
+    expect(result.second.properties.fetch("url"))
+      .to eq "https://www.wbm.de/wohnungen-berlin/angebote/details/1-436112358-2-zimmer-wohnung-in-mitte/"
+  end
 end
