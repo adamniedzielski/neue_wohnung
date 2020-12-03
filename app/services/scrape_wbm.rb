@@ -21,11 +21,21 @@ class ScrapeWbm
       external_id: "wbm-#{listing.attribute('data-id').value}",
       properties: {
         address: listing.css(".address").text.split(",").join(", "),
-        url: listing.css(".btn.sign").attribute("href").value,
+        url: url(listing),
         rooms_number: rooms_number(listing),
         wbs: listing.css(".check-property-list").text.include?("WBS")
       }
     )
+  end
+
+  def url(listing)
+    value = listing.css(".btn.sign").attribute("href").value
+
+    if value.start_with?("https")
+      value
+    else
+      "https://www.wbm.de#{value}"
+    end
   end
 
   def rooms_number(listing)
