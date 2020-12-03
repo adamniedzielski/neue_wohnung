@@ -33,8 +33,10 @@ class ScrapeDpf
   end
 
   def rooms_number(listing)
-    listing.css(".immo-data").map(&:text).map(&:strip).map do |text|
-      Integer(text) rescue nil
-    end.compact.first
+    element_with_data = listing.css(".uk-width-medium-1-4").find do |element|
+      element.text.match(/(\d*).*Zimmer/)
+    end
+
+    Integer(element_with_data.at(".immo-data").text.strip)
   end
 end
