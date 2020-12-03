@@ -1,14 +1,15 @@
 # frozen_string_literal: true
 
 class ScrapeWbm
-  URL = "https://www.wbm.de/wohnungen-berlin/angebote/"
+  BASE_URL = "https://www.wbm.de"
+  LIST_URL = "#{BASE_URL}/wohnungen-berlin/angebote/"
 
   def initialize(http_client: HTTParty)
     self.http_client = http_client
   end
 
   def call
-    page = Nokogiri::HTML(http_client.get(URL).body)
+    page = Nokogiri::HTML(http_client.get(LIST_URL).body)
     page.css(".openimmo-search-list-item").map { |listing| parse(listing) }
   end
 
@@ -34,7 +35,7 @@ class ScrapeWbm
     if value.start_with?("https")
       value
     else
-      "https://www.wbm.de#{value}"
+      "#{BASE_URL}#{value}"
     end
   end
 
