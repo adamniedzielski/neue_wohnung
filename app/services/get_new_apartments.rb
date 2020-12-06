@@ -2,7 +2,7 @@
 
 class GetNewApartments
   def initialize(
-    scrapers: [ScrapeGewobag.new, ScrapeWbm.new, ScrapeDpf.new],
+    scrapers: [ScrapeGewobag.new, ScrapeWbm.new, ScrapeDpf.new, ScrapeWbgFriedrichshain.new],
     send_telegram_message: SendTelegramMessage.new
   )
     self.scrapers = scrapers
