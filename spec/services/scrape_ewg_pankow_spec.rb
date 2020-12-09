@@ -11,4 +11,17 @@ RSpec.describe ScrapeEwgPankow do
 
     expect(result.size).to eq 0
   end
+
+  it "sends Bugnsnag notification when there's some change in HTML" do
+    http_client = MockHTTPClient.new("ewg_pankow_different.html")
+    bugnsnag_client = double(Bugsnag, notify: nil)
+    service = ScrapeEwgPankow.new(
+      http_client: http_client,
+      bugsnag_client: bugnsnag_client
+    )
+
+    service.call
+
+    expect(bugnsnag_client).to have_received(:notify)
+  end
 end
