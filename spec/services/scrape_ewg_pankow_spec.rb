@@ -22,6 +22,20 @@ RSpec.describe ScrapeEwgPankow do
 
     service.call
 
-    expect(bugnsnag_client).to have_received(:notify)
+    expect(bugnsnag_client)
+      .to have_received(:notify).with(ScrapeEwgPankow::ContentChanged)
+  end
+
+  it "does not send Bugnsnag notification when there's a message about no flats" do
+    http_client = MockHTTPClient.new("ewg_pankow_empty.html")
+    bugnsnag_client = double(Bugsnag, notify: nil)
+    service = ScrapeEwgPankow.new(
+      http_client: http_client,
+      bugsnag_client: bugnsnag_client
+    )
+
+    service.call
+
+    expect(bugnsnag_client).not_to have_received(:notify)
   end
 end

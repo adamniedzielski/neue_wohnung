@@ -11,10 +11,13 @@ class ScrapeEwgPankow
   end
 
   def call
-    _page = Nokogiri::HTML(http_client.get(URL).body)
+    html = http_client.get(URL).body
+    page = Nokogiri::HTML(html)
 
-    bugsnag_client.notify(ContentChanged) do |report|
-      report.add_tab(:html, html: html)
+    unless page.text.include?("Aktuell ist leider kein Wohnungsangebot verfügbar")
+      bugsnag_client.notify(ContentChanged) do |report|
+        report.add_tab(:html, html: html)
+      end
     end
 
     []
