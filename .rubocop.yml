@@ -2,6 +2,7 @@ AllCops:
   NewCops: enable
   Exclude:
     - "bin/**/*"
+    - "db/schema.rb"
 
 Style/StringLiterals:
   EnforcedStyle: double_quotes
