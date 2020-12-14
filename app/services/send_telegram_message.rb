@@ -3,10 +3,10 @@
 require "telegram/bot"
 
 class SendTelegramMessage
-  def call(text)
+  def call(chat_id, text)
     client = Telegram::Bot::Client.new(ENV.fetch("TELEGRAM_TOKEN"))
     client.api.send_message(
-      chat_id: ENV.fetch("TELEGRAM_CHAT_ID"),
+      chat_id: chat_id,
       text: text
     )
   end

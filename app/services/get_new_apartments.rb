@@ -37,6 +37,7 @@ class GetNewApartments
 
   def notify_about_new_apartment(apartment)
     send_telegram_message.call(
+      ENV.fetch("TELEGRAM_CHAT_ID"),
       <<~HEREDOC
         New apartment 🏠
 
