@@ -66,6 +66,7 @@ RSpec.describe GetNewApartments do
 
     expect(send_telegram_message).to have_received(:call)
       .with(
+        ENV.fetch("TELEGRAM_CHAT_ID"),
         <<~HEREDOC
           New apartment 🏠
 
@@ -96,6 +97,7 @@ RSpec.describe GetNewApartments do
 
     expect(send_telegram_message).to have_received(:call)
       .with(
+        ENV.fetch("TELEGRAM_CHAT_ID"),
         <<~HEREDOC
           New apartment 🏠
 
@@ -126,6 +128,7 @@ RSpec.describe GetNewApartments do
 
     expect(send_telegram_message).to have_received(:call)
       .with(
+        ENV.fetch("TELEGRAM_CHAT_ID"),
         <<~HEREDOC
           New apartment 🏠
 
