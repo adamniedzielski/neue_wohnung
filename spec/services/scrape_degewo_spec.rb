@@ -63,4 +63,12 @@ RSpec.describe ScrapeDegewo do
     expect(result.first.properties.fetch("wbs"))
       .to eq false
   end
+
+  it "gets all apartments when pagination is present" do
+    http_client = MockHTTPClient.new(["degewo_page_1.json", "degewo_page_2.json", "degewo_page_3.json"])
+    service = ScrapeDegewo.new(http_client: http_client)
+    result = service.call
+
+    expect(result.size).to eq 25
+  end
 end
