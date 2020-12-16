@@ -17,27 +17,29 @@ class GetNewApartments
     self.send_telegram_message = send_telegram_message
   end
 
-  # rubocop:disable Style/MultilineBlockChain
   def call
-    scrapers
+    new_apartments =
+      scrapers
       .flat_map(&:call)
       .reject do |apartment|
         Apartment.find_by(external_id: apartment.external_id).present?
       end
-      .each do |apartment|
-        apartment.save!
-        notify_about_new_apartment(apartment)
+      .each(&:save!)
+
+    Receiver.all.each do |receiver|
+      new_apartments.each do |apartment|
+        notify_about_new_apartment(receiver, apartment)
       end
+    end
   end
-  # rubocop:enable Style/MultilineBlockChain
 
   private
 
   attr_accessor :scrapers, :send_telegram_message
 
-  def notify_about_new_apartment(apartment)
+  def notify_about_new_apartment(receiver, apartment)
     send_telegram_message.call(
-      ENV.fetch("TELEGRAM_CHAT_ID"),
+      receiver.telegram_chat_id,
       <<~HEREDOC
         New apartment 🏠
 

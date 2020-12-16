@@ -55,6 +55,7 @@ RSpec.describe GetNewApartments do
         url: "https://www.gewobag.de/fuer-mieter-und-mietinteressenten/mietangebote/7100-74806-0305-0076/"
       }
     )
+    Receiver.create!(telegram_chat_id: "chat-id")
     scraper = double(call: [apartment])
     send_telegram_message = double(SendTelegramMessage, call: nil)
     service = GetNewApartments.new(
@@ -66,7 +67,7 @@ RSpec.describe GetNewApartments do
 
     expect(send_telegram_message).to have_received(:call)
       .with(
-        ENV.fetch("TELEGRAM_CHAT_ID"),
+        "chat-id",
         <<~HEREDOC
           New apartment 🏠
 
@@ -79,13 +80,18 @@ RSpec.describe GetNewApartments do
       )
   end
 
-  it "formats notification when WBS is required" do
+  it "notifies multiple receivers" do
     apartment = Apartment.new(
       external_id: "12345",
       properties: {
-        wbs: true
+        address: "Richard-Münch-Str. 42, 13591 Berlin/Staaken",
+        rooms_number: "4",
+        wbs: false,
+        url: "https://www.gewobag.de/fuer-mieter-und-mietinteressenten/mietangebote/7100-74806-0305-0076/"
       }
     )
+    Receiver.create!(telegram_chat_id: "first-chat-id")
+    Receiver.create!(telegram_chat_id: "second-chat-id")
     scraper = double(call: [apartment])
     send_telegram_message = double(SendTelegramMessage, call: nil)
     service = GetNewApartments.new(
@@ -97,7 +103,36 @@ RSpec.describe GetNewApartments do
 
     expect(send_telegram_message).to have_received(:call)
       .with(
-        ENV.fetch("TELEGRAM_CHAT_ID"),
+        "first-chat-id",
+        anything
+      )
+    expect(send_telegram_message).to have_received(:call)
+      .with(
+        "second-chat-id",
+        anything
+      )
+  end
+
+  it "formats notification when WBS is required" do
+    apartment = Apartment.new(
+      external_id: "12345",
+      properties: {
+        wbs: true
+      }
+    )
+    Receiver.create!(telegram_chat_id: "chat-id")
+    scraper = double(call: [apartment])
+    send_telegram_message = double(SendTelegramMessage, call: nil)
+    service = GetNewApartments.new(
+      scrapers: [scraper],
+      send_telegram_message: send_telegram_message
+    )
+
+    service.call
+
+    expect(send_telegram_message).to have_received(:call)
+      .with(
+        "chat-id",
         <<~HEREDOC
           New apartment 🏠
 
@@ -117,6 +152,7 @@ RSpec.describe GetNewApartments do
         address: "Richard-Münch-Str. 42, 13591 Berlin/Staaken"
       }
     )
+    Receiver.create!(telegram_chat_id: "chat-id")
     scraper = double(call: [apartment])
     send_telegram_message = double(SendTelegramMessage, call: nil)
     service = GetNewApartments.new(
@@ -128,7 +164,7 @@ RSpec.describe GetNewApartments do
 
     expect(send_telegram_message).to have_received(:call)
       .with(
-        ENV.fetch("TELEGRAM_CHAT_ID"),
+        "chat-id",
         <<~HEREDOC
           New apartment 🏠
 
