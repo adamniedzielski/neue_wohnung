@@ -9,7 +9,8 @@ class GetNewApartments
       ScrapeWbgFriedrichshain.new,
       ScrapeDegewo.new,
       ScrapeEwgPankow.new,
-      ScrapeStadtUndLand.new
+      ScrapeStadtUndLand.new,
+      ScrapeVaterland.new
     ],
     send_telegram_message: SendTelegramMessage.new
   )
