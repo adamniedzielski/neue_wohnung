@@ -55,15 +55,6 @@ RSpec.describe ScrapeStadtUndLand do
       .to eq 2
   end
 
-  it "gets the number of rooms" do
-    http_client = MockHTTPClient.new("stadt_und_land.html")
-    service = ScrapeStadtUndLand.new(http_client: http_client)
-    result = service.call
-
-    expect(result.first.properties.fetch("rooms_number"))
-      .to eq 2
-  end
-
   it "gets the WBS status when the listing is without WBS" do
     http_client = MockHTTPClient.new("stadt_und_land.html")
     service = ScrapeStadtUndLand.new(http_client: http_client)

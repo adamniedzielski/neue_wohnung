@@ -10,7 +10,8 @@ class GetNewApartments
       ScrapeDegewo.new,
       ScrapeEwgPankow.new,
       ScrapeStadtUndLand.new,
-      ScrapeVaterland.new
+      ScrapeVaterland.new,
+      ScrapeGesobau.new
     ],
     send_telegram_message: SendTelegramMessage.new
   )
