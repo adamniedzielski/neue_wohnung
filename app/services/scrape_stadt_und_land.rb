@@ -25,12 +25,19 @@ class ScrapeStadtUndLand
       properties: {
         address: listing.css("tr").find { |element| element.text.include?("Adresse") }.css("td").text,
         url: url(listing),
-        rooms_number: listing.css("tr").find { |element| element.text.include?("Zimmer") }.css("td").text.to_i
+        rooms_number: rooms_number(listing),
+        wbs: listing.css(".SP-Teaser__headline").text.downcase.include?("wbs")
       }
     )
   end
 
   def url(listing)
     "#{BASE_URL}#{listing.css('.SP-Link').first.attribute('href').value}"
+  end
+
+  def rooms_number(listing)
+    listing.css("tr").find do |element|
+      element.text.include?("Zimmer")
+    end.css("td").text.to_i
   end
 end
