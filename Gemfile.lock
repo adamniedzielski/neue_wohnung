@@ -186,6 +186,10 @@ GEM
       unicode-display_width (>= 1.4.0, < 2.0)
     rubocop-ast (1.1.1)
       parser (>= 2.7.1.5)
+    rubocop-rails (2.9.1)
+      activesupport (>= 4.2.0)
+      rack (>= 1.1)
+      rubocop (>= 0.90.0, < 2.0)
     ruby-progressbar (1.10.1)
     ruby2_keywords (0.0.2)
     sprockets (4.0.2)
@@ -235,6 +239,7 @@ DEPENDENCIES
   rails (~> 6.0.3, >= 6.0.3.4)
   rspec-rails
   rubocop
+  rubocop-rails
   telegram-bot-ruby
   tzinfo-data
   web-console (>= 3.3.0)
