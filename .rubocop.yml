@@ -1,5 +1,6 @@
 require:
   - rubocop-rails
+  - rubocop-rspec
 
 AllCops:
   NewCops: enable
@@ -21,3 +22,9 @@ Bundler/OrderedGems:
   Enabled: false
 Metrics/MethodLength:
   Max: 20
+RSpec/DescribedClass:
+  Enabled: false
+RSpec/ExampleLength:
+  Max: 50
+RSpec/MultipleExpectations:
+  Enabled: false

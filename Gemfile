@@ -35,6 +35,7 @@ group :development do
   gem "listen", "~> 3.2"
   gem "rubocop", require: false
   gem "rubocop-rails", require: false
+  gem "rubocop-rspec", require: false
   gem "web-console", ">= 3.3.0"
 end
 
