@@ -55,7 +55,13 @@ RSpec.describe GetNewApartments do
         url: "https://www.gewobag.de/fuer-mieter-und-mietinteressenten/mietangebote/7100-74806-0305-0076/"
       }
     )
-    Receiver.create!(telegram_chat_id: "chat-id")
+    Receiver.create!(
+      name: "Adam",
+      telegram_chat_id: "chat-id",
+      include_wbs: false,
+      minimum_rooms_number: 1,
+      maximum_rooms_number: 2
+    )
     scraper = instance_double(ScrapeDegewo, call: [apartment])
     send_telegram_message = instance_double(SendTelegramMessage, call: nil)
     service = GetNewApartments.new(
@@ -90,8 +96,20 @@ RSpec.describe GetNewApartments do
         url: "https://www.gewobag.de/fuer-mieter-und-mietinteressenten/mietangebote/7100-74806-0305-0076/"
       }
     )
-    Receiver.create!(telegram_chat_id: "first-chat-id")
-    Receiver.create!(telegram_chat_id: "second-chat-id")
+    Receiver.create!(
+      name: "Adam",
+      telegram_chat_id: "first-chat-id",
+      include_wbs: false,
+      minimum_rooms_number: 1,
+      maximum_rooms_number: 2
+    )
+    Receiver.create!(
+      name: "Irene and Chris",
+      telegram_chat_id: "second-chat-id",
+      include_wbs: false,
+      minimum_rooms_number: 3,
+      maximum_rooms_number: 4
+    )
     scraper = instance_double(ScrapeDegewo, call: [apartment])
     send_telegram_message = instance_double(SendTelegramMessage, call: nil)
     service = GetNewApartments.new(
@@ -120,7 +138,13 @@ RSpec.describe GetNewApartments do
         wbs: true
       }
     )
-    Receiver.create!(telegram_chat_id: "chat-id")
+    Receiver.create!(
+      name: "Adam",
+      telegram_chat_id: "chat-id",
+      include_wbs: false,
+      minimum_rooms_number: 1,
+      maximum_rooms_number: 2
+    )
     scraper = instance_double(ScrapeDegewo, call: [apartment])
     send_telegram_message = instance_double(SendTelegramMessage, call: nil)
     service = GetNewApartments.new(
@@ -152,7 +176,13 @@ RSpec.describe GetNewApartments do
         address: "Richard-Münch-Str. 42, 13591 Berlin/Staaken"
       }
     )
-    Receiver.create!(telegram_chat_id: "chat-id")
+    Receiver.create!(
+      name: "Adam",
+      telegram_chat_id: "chat-id",
+      include_wbs: false,
+      minimum_rooms_number: 1,
+      maximum_rooms_number: 2
+    )
     scraper = instance_double(ScrapeDegewo, call: [apartment])
     send_telegram_message = instance_double(SendTelegramMessage, call: nil)
     service = GetNewApartments.new(
