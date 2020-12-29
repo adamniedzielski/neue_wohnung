@@ -131,6 +131,47 @@ RSpec.describe GetNewApartments do
       )
   end
 
+  it "filters apartments based on receiver preferences" do
+    apartment = Apartment.new(
+      external_id: "12345",
+      properties: {
+        address: "Richard-Münch-Str. 42, 13591 Berlin/Staaken",
+        rooms_number: 4,
+        wbs: false,
+        url: "https://www.gewobag.de/fuer-mieter-und-mietinteressenten/mietangebote/7100-74806-0305-0076/"
+      }
+    )
+    Receiver.create!(
+      telegram_chat_id: "first-chat-id",
+      minimum_rooms_number: 1,
+      maximum_rooms_number: 2
+    )
+    Receiver.create!(
+      telegram_chat_id: "second-chat-id",
+      minimum_rooms_number: 3,
+      maximum_rooms_number: 4
+    )
+    scraper = instance_double(ScrapeDegewo, call: [apartment])
+    send_telegram_message = instance_double(SendTelegramMessage, call: nil)
+    service = GetNewApartments.new(
+      scrapers: [scraper],
+      send_telegram_message: send_telegram_message
+    )
+
+    service.call
+
+    expect(send_telegram_message).not_to have_received(:call)
+      .with(
+        "first-chat-id",
+        anything
+      )
+    expect(send_telegram_message).to have_received(:call)
+      .with(
+        "second-chat-id",
+        anything
+      )
+  end
+
   it "formats notification when WBS is required" do
     apartment = Apartment.new(
       external_id: "12345",
