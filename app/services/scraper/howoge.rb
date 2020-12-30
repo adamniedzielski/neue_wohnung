@@ -15,7 +15,7 @@ module Scraper
       json = JSON.parse(http_client.get(LIST_URL).body)
       json.fetch("immoobjects").map do |listing|
         Apartment.new(
-          external_id: "howoge-#{listing.fetch('uid')}",
+          external_id: "howoge-#{listing.fetch('title')}-#{listing.fetch('rent')}",
           properties: {
             address: listing.fetch("title"),
             url: "#{BASE_URL}#{listing.fetch('link')}",

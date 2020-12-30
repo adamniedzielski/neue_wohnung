@@ -43,7 +43,7 @@ RSpec.describe Scraper::Howoge do
     service = Scraper::Howoge.new(http_client: http_client)
     result = service.call
 
-    expect(result.first.external_id).to eq "howoge-5998"
+    expect(result.first.external_id).to eq "howoge-Genslerstraße 16, 13055 Berlin-788.48"
   end
 
   it "gets the number of rooms" do
