@@ -50,7 +50,7 @@ RSpec.describe GetNewApartments do
       external_id: "12345",
       properties: {
         address: "Richard-Münch-Str. 42, 13591 Berlin/Staaken",
-        rooms_number: "4",
+        rooms_number: 4,
         wbs: false,
         url: "https://www.gewobag.de/fuer-mieter-und-mietinteressenten/mietangebote/7100-74806-0305-0076/"
       }
@@ -60,7 +60,7 @@ RSpec.describe GetNewApartments do
       telegram_chat_id: "chat-id",
       include_wbs: false,
       minimum_rooms_number: 1,
-      maximum_rooms_number: 2
+      maximum_rooms_number: 4
     )
     scraper = instance_double(ScrapeDegewo, call: [apartment])
     send_telegram_message = instance_double(SendTelegramMessage, call: nil)
@@ -91,7 +91,7 @@ RSpec.describe GetNewApartments do
       external_id: "12345",
       properties: {
         address: "Richard-Münch-Str. 42, 13591 Berlin/Staaken",
-        rooms_number: "4",
+        rooms_number: 3,
         wbs: false,
         url: "https://www.gewobag.de/fuer-mieter-und-mietinteressenten/mietangebote/7100-74806-0305-0076/"
       }
@@ -101,7 +101,7 @@ RSpec.describe GetNewApartments do
       telegram_chat_id: "first-chat-id",
       include_wbs: false,
       minimum_rooms_number: 1,
-      maximum_rooms_number: 2
+      maximum_rooms_number: 3
     )
     Receiver.create!(
       name: "Irene and Chris",
@@ -142,12 +142,16 @@ RSpec.describe GetNewApartments do
       }
     )
     Receiver.create!(
+      name: "Adam",
       telegram_chat_id: "first-chat-id",
+      include_wbs: false,
       minimum_rooms_number: 1,
       maximum_rooms_number: 2
     )
     Receiver.create!(
+      name: "Irene and Chris",
       telegram_chat_id: "second-chat-id",
+      include_wbs: false,
       minimum_rooms_number: 3,
       maximum_rooms_number: 4
     )
