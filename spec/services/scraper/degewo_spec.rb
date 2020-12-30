@@ -3,10 +3,10 @@
 require "rails_helper"
 require "test_helpers/mock_http_client"
 
-RSpec.describe ScrapeDegewo do
+RSpec.describe Scraper::Degewo do
   it "gets multiple apartments" do
     http_client = MockHTTPClient.new("degewo.json")
-    service = ScrapeDegewo.new(http_client: http_client)
+    service = Scraper::Degewo.new(http_client: http_client)
     result = service.call
 
     expect(result.size).to eq 10
@@ -14,7 +14,7 @@ RSpec.describe ScrapeDegewo do
 
   it "returns Apartment instances" do
     http_client = MockHTTPClient.new("degewo.json")
-    service = ScrapeDegewo.new(http_client: http_client)
+    service = Scraper::Degewo.new(http_client: http_client)
     result = service.call
 
     expect(result.first.class).to eq Apartment
@@ -22,7 +22,7 @@ RSpec.describe ScrapeDegewo do
 
   it "gets apartment address" do
     http_client = MockHTTPClient.new("degewo.json")
-    service = ScrapeDegewo.new(http_client: http_client)
+    service = Scraper::Degewo.new(http_client: http_client)
     result = service.call
 
     expect(result.first.properties.fetch("address"))
@@ -31,7 +31,7 @@ RSpec.describe ScrapeDegewo do
 
   it "gets link to the full offer" do
     http_client = MockHTTPClient.new("degewo.json")
-    service = ScrapeDegewo.new(http_client: http_client)
+    service = Scraper::Degewo.new(http_client: http_client)
     result = service.call
 
     expect(result.first.properties.fetch("url"))
@@ -40,7 +40,7 @@ RSpec.describe ScrapeDegewo do
 
   it "assigns external identifier" do
     http_client = MockHTTPClient.new("degewo.json")
-    service = ScrapeDegewo.new(http_client: http_client)
+    service = Scraper::Degewo.new(http_client: http_client)
     result = service.call
 
     expect(result.first.external_id).to eq "degewo-https://immosuche.degewo.de/de/properties/W1400-40137-0620-0603"
@@ -48,7 +48,7 @@ RSpec.describe ScrapeDegewo do
 
   it "gets the number of rooms" do
     http_client = MockHTTPClient.new("degewo.json")
-    service = ScrapeDegewo.new(http_client: http_client)
+    service = Scraper::Degewo.new(http_client: http_client)
     result = service.call
 
     expect(result.first.properties.fetch("rooms_number"))
@@ -57,7 +57,7 @@ RSpec.describe ScrapeDegewo do
 
   it "gets the WBS status" do
     http_client = MockHTTPClient.new("degewo.json")
-    service = ScrapeDegewo.new(http_client: http_client)
+    service = Scraper::Degewo.new(http_client: http_client)
     result = service.call
 
     expect(result.first.properties.fetch("wbs"))
@@ -66,7 +66,7 @@ RSpec.describe ScrapeDegewo do
 
   it "gets all apartments when pagination is present" do
     http_client = MockHTTPClient.new(["degewo_page_1.json", "degewo_page_2.json", "degewo_page_3.json"])
-    service = ScrapeDegewo.new(http_client: http_client)
+    service = Scraper::Degewo.new(http_client: http_client)
     result = service.call
 
     expect(result.size).to eq 25

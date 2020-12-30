@@ -3,10 +3,10 @@
 require "rails_helper"
 require "test_helpers/mock_http_client"
 
-RSpec.describe ScrapeDpf do
+RSpec.describe Scraper::Dpf do
   it "gets multiple apartments" do
     http_client = MockHTTPClient.new("dpf.html")
-    service = ScrapeDpf.new(http_client: http_client)
+    service = Scraper::Dpf.new(http_client: http_client)
     result = service.call
 
     expect(result.size).to eq 2
@@ -14,7 +14,7 @@ RSpec.describe ScrapeDpf do
 
   it "returns Apartment instances" do
     http_client = MockHTTPClient.new("dpf.html")
-    service = ScrapeDpf.new(http_client: http_client)
+    service = Scraper::Dpf.new(http_client: http_client)
     result = service.call
 
     expect(result.first.class).to eq Apartment
@@ -22,7 +22,7 @@ RSpec.describe ScrapeDpf do
 
   it "gets apartment address" do
     http_client = MockHTTPClient.new("dpf.html")
-    service = ScrapeDpf.new(http_client: http_client)
+    service = Scraper::Dpf.new(http_client: http_client)
     result = service.call
 
     expect(result.first.properties.fetch("address"))
@@ -31,7 +31,7 @@ RSpec.describe ScrapeDpf do
 
   it "assigns external identifier" do
     http_client = MockHTTPClient.new("dpf.html")
-    service = ScrapeDpf.new(http_client: http_client)
+    service = Scraper::Dpf.new(http_client: http_client)
     result = service.call
 
     expect(result.first.external_id).to eq "dpf-https://www.dpfonline.de/immobilien/wohnkomfort-in-rosenthal-2-grosszuegige-zimmer-mit-wohlfuehl-terasse/"
@@ -39,7 +39,7 @@ RSpec.describe ScrapeDpf do
 
   it "gets link to the full offer" do
     http_client = MockHTTPClient.new("dpf.html")
-    service = ScrapeDpf.new(http_client: http_client)
+    service = Scraper::Dpf.new(http_client: http_client)
     result = service.call
 
     expect(result.first.properties.fetch("url"))
@@ -48,7 +48,7 @@ RSpec.describe ScrapeDpf do
 
   it "gets the number of rooms" do
     http_client = MockHTTPClient.new("dpf.html")
-    service = ScrapeDpf.new(http_client: http_client)
+    service = Scraper::Dpf.new(http_client: http_client)
     result = service.call
 
     expect(result.first.properties.fetch("rooms_number"))
@@ -57,7 +57,7 @@ RSpec.describe ScrapeDpf do
 
   it "gets the WBS status when the listing is without WBS" do
     http_client = MockHTTPClient.new("dpf.html")
-    service = ScrapeDpf.new(http_client: http_client)
+    service = Scraper::Dpf.new(http_client: http_client)
     result = service.call
 
     expect(result.first.properties.fetch("wbs"))
@@ -66,7 +66,7 @@ RSpec.describe ScrapeDpf do
 
   it "gets the WBS status when the listing is with WBS" do
     http_client = MockHTTPClient.new("dpf.html")
-    service = ScrapeDpf.new(http_client: http_client)
+    service = Scraper::Dpf.new(http_client: http_client)
     result = service.call
 
     expect(result.second.properties.fetch("wbs"))

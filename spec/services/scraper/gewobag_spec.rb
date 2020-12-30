@@ -3,10 +3,10 @@
 require "rails_helper"
 require "test_helpers/mock_http_client"
 
-RSpec.describe ScrapeGewobag do
+RSpec.describe Scraper::Gewobag do
   it "gets multiple apartments" do
     http_client = MockHTTPClient.new("gewobag.html")
-    service = ScrapeGewobag.new(http_client: http_client)
+    service = Scraper::Gewobag.new(http_client: http_client)
     result = service.call
 
     expect(result.size).to eq 8
@@ -14,7 +14,7 @@ RSpec.describe ScrapeGewobag do
 
   it "returns Apartment instances" do
     http_client = MockHTTPClient.new("gewobag.html")
-    service = ScrapeGewobag.new(http_client: http_client)
+    service = Scraper::Gewobag.new(http_client: http_client)
     result = service.call
 
     expect(result.first.class).to eq Apartment
@@ -22,7 +22,7 @@ RSpec.describe ScrapeGewobag do
 
   it "gets apartment address" do
     http_client = MockHTTPClient.new("gewobag.html")
-    service = ScrapeGewobag.new(http_client: http_client)
+    service = Scraper::Gewobag.new(http_client: http_client)
     result = service.call
 
     expect(result.first.properties.fetch("address"))
@@ -31,7 +31,7 @@ RSpec.describe ScrapeGewobag do
 
   it "assigns external identifier" do
     http_client = MockHTTPClient.new("gewobag.html")
-    service = ScrapeGewobag.new(http_client: http_client)
+    service = Scraper::Gewobag.new(http_client: http_client)
     result = service.call
 
     expect(result.first.external_id).to eq "gewobag-43925"
@@ -39,7 +39,7 @@ RSpec.describe ScrapeGewobag do
 
   it "gets link to the full offer" do
     http_client = MockHTTPClient.new("gewobag.html")
-    service = ScrapeGewobag.new(http_client: http_client)
+    service = Scraper::Gewobag.new(http_client: http_client)
     result = service.call
 
     expect(result.first.properties.fetch("url"))
@@ -48,7 +48,7 @@ RSpec.describe ScrapeGewobag do
 
   it "gets the number of rooms" do
     http_client = MockHTTPClient.new("gewobag.html")
-    service = ScrapeGewobag.new(http_client: http_client)
+    service = Scraper::Gewobag.new(http_client: http_client)
     result = service.call
 
     expect(result.first.properties.fetch("rooms_number"))
@@ -57,7 +57,7 @@ RSpec.describe ScrapeGewobag do
 
   it "gets the WBS status" do
     http_client = MockHTTPClient.new("gewobag.html")
-    service = ScrapeGewobag.new(http_client: http_client)
+    service = Scraper::Gewobag.new(http_client: http_client)
     result = service.call
 
     expect(result.first.properties.fetch("wbs"))
