@@ -3,16 +3,16 @@
 class GetNewApartments
   def initialize(
     scrapers: [
-      ScrapeGewobag.new,
-      ScrapeWbm.new,
-      ScrapeDpf.new,
-      ScrapeWbgFriedrichshain.new,
-      ScrapeDegewo.new,
-      ScrapeEwgPankow.new,
-      ScrapeStadtUndLand.new,
-      ScrapeVaterland.new,
-      ScrapeGesobau.new,
-      ScrapeHowoge.new
+      Scraper::Gewobag.new,
+      Scraper::Wbm.new,
+      Scraper::Dpf.new,
+      Scraper::WbgFriedrichshain.new,
+      Scraper::Degewo.new,
+      Scraper::EwgPankow.new,
+      Scraper::StadtUndLand.new,
+      Scraper::Vaterland.new,
+      Scraper::Gesobau.new,
+      Scraper::Howoge.new
     ],
     send_telegram_message: SendTelegramMessage.new
   )
