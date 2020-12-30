@@ -4,8 +4,8 @@ require "rails_helper"
 
 RSpec.describe GetNewApartments do
   it "calls each scraper" do
-    first_scraper = instance_double(ScrapeDegewo, call: [])
-    second_scraper = instance_double(ScrapeDegewo, call: [])
+    first_scraper = instance_double(Scraper::Degewo, call: [])
+    second_scraper = instance_double(Scraper::Degewo, call: [])
     send_telegram_message = instance_double(SendTelegramMessage, call: nil)
     service = GetNewApartments.new(
       scrapers: [first_scraper, second_scraper],
@@ -20,7 +20,7 @@ RSpec.describe GetNewApartments do
 
   it "filters out apartments that were already scraped" do
     _old_apartment = Apartment.create!(external_id: "12345")
-    scraper = instance_double(ScrapeDegewo, call: [Apartment.new(external_id: "12345")])
+    scraper = instance_double(Scraper::Degewo, call: [Apartment.new(external_id: "12345")])
     send_telegram_message = instance_double(SendTelegramMessage, call: nil)
     service = GetNewApartments.new(
       scrapers: [scraper],
@@ -33,7 +33,7 @@ RSpec.describe GetNewApartments do
   end
 
   it "saves new apartment to the database" do
-    scraper = instance_double(ScrapeDegewo, call: [Apartment.new(external_id: "12345")])
+    scraper = instance_double(Scraper::Degewo, call: [Apartment.new(external_id: "12345")])
     send_telegram_message = instance_double(SendTelegramMessage, call: nil)
     service = GetNewApartments.new(
       scrapers: [scraper],
@@ -62,7 +62,7 @@ RSpec.describe GetNewApartments do
       minimum_rooms_number: 1,
       maximum_rooms_number: 4
     )
-    scraper = instance_double(ScrapeDegewo, call: [apartment])
+    scraper = instance_double(Scraper::Degewo, call: [apartment])
     send_telegram_message = instance_double(SendTelegramMessage, call: nil)
     service = GetNewApartments.new(
       scrapers: [scraper],
@@ -110,7 +110,7 @@ RSpec.describe GetNewApartments do
       minimum_rooms_number: 3,
       maximum_rooms_number: 4
     )
-    scraper = instance_double(ScrapeDegewo, call: [apartment])
+    scraper = instance_double(Scraper::Degewo, call: [apartment])
     send_telegram_message = instance_double(SendTelegramMessage, call: nil)
     service = GetNewApartments.new(
       scrapers: [scraper],
@@ -155,7 +155,7 @@ RSpec.describe GetNewApartments do
       minimum_rooms_number: 3,
       maximum_rooms_number: 4
     )
-    scraper = instance_double(ScrapeDegewo, call: [apartment])
+    scraper = instance_double(Scraper::Degewo, call: [apartment])
     send_telegram_message = instance_double(SendTelegramMessage, call: nil)
     service = GetNewApartments.new(
       scrapers: [scraper],
@@ -192,7 +192,7 @@ RSpec.describe GetNewApartments do
       minimum_rooms_number: 1,
       maximum_rooms_number: 2
     )
-    scraper = instance_double(ScrapeDegewo, call: [apartment])
+    scraper = instance_double(Scraper::Degewo, call: [apartment])
     send_telegram_message = instance_double(SendTelegramMessage, call: nil)
     service = GetNewApartments.new(
       scrapers: [scraper],
@@ -232,7 +232,7 @@ RSpec.describe GetNewApartments do
       minimum_rooms_number: 1,
       maximum_rooms_number: 2
     )
-    scraper = instance_double(ScrapeDegewo, call: [apartment])
+    scraper = instance_double(Scraper::Degewo, call: [apartment])
     send_telegram_message = instance_double(SendTelegramMessage, call: nil)
     service = GetNewApartments.new(
       scrapers: [scraper],
@@ -267,7 +267,7 @@ RSpec.describe GetNewApartments do
       minimum_rooms_number: 1,
       maximum_rooms_number: 2
     )
-    scraper = instance_double(ScrapeDegewo, call: [apartment])
+    scraper = instance_double(Scraper::Degewo, call: [apartment])
     send_telegram_message = instance_double(SendTelegramMessage, call: nil)
     service = GetNewApartments.new(
       scrapers: [scraper],
@@ -305,7 +305,7 @@ RSpec.describe GetNewApartments do
       minimum_rooms_number: 1,
       maximum_rooms_number: 2
     )
-    scraper = instance_double(ScrapeDegewo, call: [apartment])
+    scraper = instance_double(Scraper::Degewo, call: [apartment])
     send_telegram_message = instance_double(SendTelegramMessage, call: nil)
     service = GetNewApartments.new(
       scrapers: [scraper],

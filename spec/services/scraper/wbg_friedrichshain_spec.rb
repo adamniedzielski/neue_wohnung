@@ -3,10 +3,10 @@
 require "rails_helper"
 require "test_helpers/mock_http_client"
 
-RSpec.describe ScrapeWbgFriedrichshain do
+RSpec.describe Scraper::WbgFriedrichshain do
   it "gets multiple apartments" do
     http_client = MockHTTPClient.new("wbg_friedrichshain.html")
-    service = ScrapeWbgFriedrichshain.new(http_client: http_client)
+    service = Scraper::WbgFriedrichshain.new(http_client: http_client)
     result = service.call
 
     expect(result.size).to eq 3
@@ -14,7 +14,7 @@ RSpec.describe ScrapeWbgFriedrichshain do
 
   it "returns Apartment instances" do
     http_client = MockHTTPClient.new("wbg_friedrichshain.html")
-    service = ScrapeWbgFriedrichshain.new(http_client: http_client)
+    service = Scraper::WbgFriedrichshain.new(http_client: http_client)
     result = service.call
 
     expect(result.first.class).to eq Apartment
@@ -22,7 +22,7 @@ RSpec.describe ScrapeWbgFriedrichshain do
 
   it "gets apartment address" do
     http_client = MockHTTPClient.new("wbg_friedrichshain.html")
-    service = ScrapeWbgFriedrichshain.new(http_client: http_client)
+    service = Scraper::WbgFriedrichshain.new(http_client: http_client)
     result = service.call
 
     expect(result.first.properties.fetch("address"))
@@ -31,7 +31,7 @@ RSpec.describe ScrapeWbgFriedrichshain do
 
   it "assigns external identifier" do
     http_client = MockHTTPClient.new("wbg_friedrichshain.html")
-    service = ScrapeWbgFriedrichshain.new(http_client: http_client)
+    service = Scraper::WbgFriedrichshain.new(http_client: http_client)
     result = service.call
 
     expect(result.first.external_id).to eq "wbg-friedrichshain-https://www.wbg-friedrichshain-eg.de/wohnungsangebote/343-moderne-2-zimmer-wohnung-mit-grosser-kueche"
@@ -39,7 +39,7 @@ RSpec.describe ScrapeWbgFriedrichshain do
 
   it "gets link to the full offer" do
     http_client = MockHTTPClient.new("wbg_friedrichshain.html")
-    service = ScrapeWbgFriedrichshain.new(http_client: http_client)
+    service = Scraper::WbgFriedrichshain.new(http_client: http_client)
     result = service.call
 
     expect(result.first.properties.fetch("url"))
@@ -48,7 +48,7 @@ RSpec.describe ScrapeWbgFriedrichshain do
 
   it "gets the number of rooms" do
     http_client = MockHTTPClient.new("wbg_friedrichshain.html")
-    service = ScrapeWbgFriedrichshain.new(http_client: http_client)
+    service = Scraper::WbgFriedrichshain.new(http_client: http_client)
     result = service.call
 
     expect(result.first.properties.fetch("rooms_number"))

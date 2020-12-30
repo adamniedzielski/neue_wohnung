@@ -3,10 +3,10 @@
 require "rails_helper"
 require "test_helpers/mock_http_client"
 
-RSpec.describe ScrapeEwgPankow do
+RSpec.describe Scraper::EwgPankow do
   it "returns 0 apartments for empty page" do
     http_client = MockHTTPClient.new("ewg_pankow_empty.html")
-    service = ScrapeEwgPankow.new(http_client: http_client)
+    service = Scraper::EwgPankow.new(http_client: http_client)
     result = service.call
 
     expect(result.size).to eq 0
@@ -15,7 +15,7 @@ RSpec.describe ScrapeEwgPankow do
   it "sends Bugnsnag notification when there's some change in HTML" do
     http_client = MockHTTPClient.new("ewg_pankow_different.html")
     bugnsnag_client = class_double(Bugsnag, notify: nil)
-    service = ScrapeEwgPankow.new(
+    service = Scraper::EwgPankow.new(
       http_client: http_client,
       bugsnag_client: bugnsnag_client
     )
@@ -23,13 +23,13 @@ RSpec.describe ScrapeEwgPankow do
     service.call
 
     expect(bugnsnag_client)
-      .to have_received(:notify).with(ScrapeEwgPankow::ContentChanged)
+      .to have_received(:notify).with(Scraper::EwgPankow::ContentChanged)
   end
 
   it "does not send Bugnsnag notification when there's a message about no flats" do
     http_client = MockHTTPClient.new("ewg_pankow_empty.html")
     bugnsnag_client = class_double(Bugsnag, notify: nil)
-    service = ScrapeEwgPankow.new(
+    service = Scraper::EwgPankow.new(
       http_client: http_client,
       bugsnag_client: bugnsnag_client
     )

@@ -3,10 +3,10 @@
 require "rails_helper"
 require "test_helpers/mock_http_client"
 
-RSpec.describe ScrapeHowoge do
+RSpec.describe Scraper::Howoge do
   it "gets multiple apartments" do
     http_client = MockHTTPClient.new("howoge.json")
-    service = ScrapeHowoge.new(http_client: http_client)
+    service = Scraper::Howoge.new(http_client: http_client)
     result = service.call
 
     expect(result.size).to eq 13
@@ -14,7 +14,7 @@ RSpec.describe ScrapeHowoge do
 
   it "returns Apartment instances" do
     http_client = MockHTTPClient.new("howoge.json")
-    service = ScrapeHowoge.new(http_client: http_client)
+    service = Scraper::Howoge.new(http_client: http_client)
     result = service.call
 
     expect(result.first.class).to eq Apartment
@@ -22,7 +22,7 @@ RSpec.describe ScrapeHowoge do
 
   it "gets apartment address" do
     http_client = MockHTTPClient.new("howoge.json")
-    service = ScrapeHowoge.new(http_client: http_client)
+    service = Scraper::Howoge.new(http_client: http_client)
     result = service.call
 
     expect(result.first.properties.fetch("address"))
@@ -31,7 +31,7 @@ RSpec.describe ScrapeHowoge do
 
   it "gets link to the full offer" do
     http_client = MockHTTPClient.new("howoge.json")
-    service = ScrapeHowoge.new(http_client: http_client)
+    service = Scraper::Howoge.new(http_client: http_client)
     result = service.call
 
     expect(result.first.properties.fetch("url"))
@@ -40,7 +40,7 @@ RSpec.describe ScrapeHowoge do
 
   it "assigns external identifier" do
     http_client = MockHTTPClient.new("howoge.json")
-    service = ScrapeHowoge.new(http_client: http_client)
+    service = Scraper::Howoge.new(http_client: http_client)
     result = service.call
 
     expect(result.first.external_id).to eq "howoge-5998"
@@ -48,7 +48,7 @@ RSpec.describe ScrapeHowoge do
 
   it "gets the number of rooms" do
     http_client = MockHTTPClient.new("howoge.json")
-    service = ScrapeHowoge.new(http_client: http_client)
+    service = Scraper::Howoge.new(http_client: http_client)
     result = service.call
 
     expect(result.first.properties.fetch("rooms_number"))
@@ -57,7 +57,7 @@ RSpec.describe ScrapeHowoge do
 
   it "gets only the offers without WBS required" do
     http_client = MockHTTPClient.new("howoge.json")
-    service = ScrapeHowoge.new(http_client: http_client)
+    service = Scraper::Howoge.new(http_client: http_client)
     result = service.call
 
     expect(result.first.properties.fetch("wbs"))

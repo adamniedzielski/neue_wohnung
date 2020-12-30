@@ -3,10 +3,10 @@
 require "rails_helper"
 require "test_helpers/mock_http_client"
 
-RSpec.describe ScrapeVaterland do
+RSpec.describe Scraper::Vaterland do
   it "gets multiple apartments" do
     http_client = MockHTTPClient.new("vaterland.html")
-    service = ScrapeVaterland.new(http_client: http_client)
+    service = Scraper::Vaterland.new(http_client: http_client)
     result = service.call
 
     expect(result.size).to eq 3
@@ -14,7 +14,7 @@ RSpec.describe ScrapeVaterland do
 
   it "returns Apartment instances" do
     http_client = MockHTTPClient.new("vaterland.html")
-    service = ScrapeVaterland.new(http_client: http_client)
+    service = Scraper::Vaterland.new(http_client: http_client)
     result = service.call
 
     expect(result.first.class).to eq Apartment
@@ -22,7 +22,7 @@ RSpec.describe ScrapeVaterland do
 
   it "gets apartment address" do
     http_client = MockHTTPClient.new("vaterland.html")
-    service = ScrapeVaterland.new(http_client: http_client)
+    service = Scraper::Vaterland.new(http_client: http_client)
     result = service.call
 
     expect(result.first.properties.fetch("address"))
@@ -31,7 +31,7 @@ RSpec.describe ScrapeVaterland do
 
   it "returns link to the list page as there are no individual pages" do
     http_client = MockHTTPClient.new("vaterland.html")
-    service = ScrapeVaterland.new(http_client: http_client)
+    service = Scraper::Vaterland.new(http_client: http_client)
     result = service.call
 
     expect(result.first.properties.fetch("url"))
@@ -40,7 +40,7 @@ RSpec.describe ScrapeVaterland do
 
   it "assigns external identifier" do
     http_client = MockHTTPClient.new("vaterland.html")
-    service = ScrapeVaterland.new(http_client: http_client)
+    service = Scraper::Vaterland.new(http_client: http_client)
     result = service.call
 
     expect(result.first.external_id).to eq(
@@ -50,7 +50,7 @@ RSpec.describe ScrapeVaterland do
 
   it "gets the number of rooms" do
     http_client = MockHTTPClient.new("vaterland.html")
-    service = ScrapeVaterland.new(http_client: http_client)
+    service = Scraper::Vaterland.new(http_client: http_client)
     result = service.call
 
     expect(result.first.properties.fetch("rooms_number"))

@@ -3,10 +3,10 @@
 require "rails_helper"
 require "test_helpers/mock_http_client"
 
-RSpec.describe ScrapeGesobau do
+RSpec.describe Scraper::Gesobau do
   it "gets multiple apartments" do
     http_client = MockHTTPClient.new("gesobau.html")
-    service = ScrapeGesobau.new(http_client: http_client)
+    service = Scraper::Gesobau.new(http_client: http_client)
     result = service.call
 
     expect(result.size).to eq 9
@@ -14,7 +14,7 @@ RSpec.describe ScrapeGesobau do
 
   it "returns Apartment instances" do
     http_client = MockHTTPClient.new("gesobau.html")
-    service = ScrapeGesobau.new(http_client: http_client)
+    service = Scraper::Gesobau.new(http_client: http_client)
     result = service.call
 
     expect(result.first.class).to eq Apartment
@@ -22,7 +22,7 @@ RSpec.describe ScrapeGesobau do
 
   it "gets apartment address" do
     http_client = MockHTTPClient.new("gesobau.html")
-    service = ScrapeGesobau.new(http_client: http_client)
+    service = Scraper::Gesobau.new(http_client: http_client)
     result = service.call
 
     expect(result.first.properties.fetch("address"))
@@ -31,7 +31,7 @@ RSpec.describe ScrapeGesobau do
 
   it "gets link to the full offer" do
     http_client = MockHTTPClient.new("gesobau.html")
-    service = ScrapeGesobau.new(http_client: http_client)
+    service = Scraper::Gesobau.new(http_client: http_client)
     result = service.call
 
     expect(result.first.properties.fetch("url"))
@@ -40,7 +40,7 @@ RSpec.describe ScrapeGesobau do
 
   it "assigns external identifier" do
     http_client = MockHTTPClient.new("gesobau.html")
-    service = ScrapeGesobau.new(http_client: http_client)
+    service = Scraper::Gesobau.new(http_client: http_client)
     result = service.call
 
     expect(result.first.external_id).to eq "gesobau-https://www.gesobau.de/wohnung/gadebuscher-strasse-1zi-10-03239-1221-g.html"
@@ -48,7 +48,7 @@ RSpec.describe ScrapeGesobau do
 
   it "gets the number of rooms" do
     http_client = MockHTTPClient.new("gesobau.html")
-    service = ScrapeGesobau.new(http_client: http_client)
+    service = Scraper::Gesobau.new(http_client: http_client)
     result = service.call
 
     expect(result.first.properties.fetch("rooms_number"))
