@@ -31,9 +31,7 @@ class GetNewApartments
 
     Receiver.all.each do |receiver|
       new_apartments.each do |apartment|
-        if matches_preferences?(receiver, apartment)
-          notify_about_new_apartment(receiver, apartment)
-        end
+        notify_about_new_apartment(receiver, apartment) if matches_preferences?(receiver, apartment)
       end
     end
   end
@@ -46,13 +44,8 @@ class GetNewApartments
     rooms_number = apartment.properties.fetch("rooms_number", nil)
     wbs = apartment.properties.fetch("wbs", false)
 
-    if rooms_number
-      return false unless (receiver.minimum_rooms_number..receiver.maximum_rooms_number).cover?(rooms_number)
-    end
-
-    if wbs
-      return false unless receiver.include_wbs?
-    end
+    return false if rooms_number && !(receiver.minimum_rooms_number..receiver.maximum_rooms_number).cover?(rooms_number)
+    return false if wbs && !receiver.include_wbs?
 
     true
   end
