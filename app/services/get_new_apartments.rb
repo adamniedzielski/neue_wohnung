@@ -2,28 +2,17 @@
 
 class GetNewApartments
   def initialize(
-    scrapers: [
-      Scraper::Gewobag.new,
-      Scraper::Wbm.new,
-      Scraper::Dpf.new,
-      Scraper::WbgFriedrichshain.new,
-      Scraper::Degewo.new,
-      Scraper::EwgPankow.new,
-      Scraper::StadtUndLand.new,
-      Scraper::Vaterland.new,
-      Scraper::Gesobau.new,
-      Scraper::Howoge.new
-    ],
+    scrape_all: ScrapeAll.new,
     send_telegram_message: SendTelegramMessage.new
   )
-    self.scrapers = scrapers
+    self.scrape_all = scrape_all
     self.send_telegram_message = send_telegram_message
   end
 
   def call
     new_apartments =
-      scrapers
-      .flat_map(&:call)
+      scrape_all
+      .call
       .reject do |apartment|
         Apartment.find_by(external_id: apartment.external_id).present?
       end
@@ -38,7 +27,7 @@ class GetNewApartments
 
   private
 
-  attr_accessor :scrapers, :send_telegram_message
+  attr_accessor :scrape_all, :send_telegram_message
 
   def matches_preferences?(receiver, apartment)
     rooms_number = apartment.properties.fetch("rooms_number", nil)
