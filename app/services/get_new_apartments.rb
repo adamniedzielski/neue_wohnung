@@ -3,10 +3,10 @@
 class GetNewApartments
   def initialize(
     scrape_all: ScrapeAll.new,
-    send_telegram_message: SendTelegramMessage.new
+    notify_about_apartment: NotifyAboutApartment.new
   )
     self.scrape_all = scrape_all
-    self.send_telegram_message = send_telegram_message
+    self.notify_about_apartment = notify_about_apartment
   end
 
   def call
@@ -20,14 +20,14 @@ class GetNewApartments
 
     Receiver.all.each do |receiver|
       new_apartments.each do |apartment|
-        notify_about_new_apartment(receiver, apartment) if matches_preferences?(receiver, apartment)
+        notify_about_apartment.call(receiver, apartment) if matches_preferences?(receiver, apartment)
       end
     end
   end
 
   private
 
-  attr_accessor :scrape_all, :send_telegram_message
+  attr_accessor :scrape_all, :notify_about_apartment
 
   def matches_preferences?(receiver, apartment)
     rooms_number = apartment.properties.fetch("rooms_number", nil)
@@ -37,30 +37,5 @@ class GetNewApartments
     return false if wbs && !receiver.include_wbs?
 
     true
-  end
-
-  def notify_about_new_apartment(receiver, apartment)
-    send_telegram_message.call(
-      receiver.telegram_chat_id,
-      <<~HEREDOC
-        New apartment 🏠
-
-        Address: #{apartment.properties.fetch('address', '?')}
-        Rooms: #{apartment.properties.fetch('rooms_number', '?')}
-        WBS: #{format_wbs_status(apartment)}
-
-        #{apartment.properties.fetch('url', 'no link available')}
-      HEREDOC
-    )
-  end
-
-  def format_wbs_status(apartment)
-    return "?" unless apartment.properties.key?("wbs")
-
-    if apartment.properties.fetch("wbs")
-      "required"
-    else
-      "not required"
-    end
   end
 end
