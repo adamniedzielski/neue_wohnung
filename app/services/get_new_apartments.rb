@@ -9,6 +9,7 @@ class GetNewApartments
     self.notify_about_apartment = notify_about_apartment
   end
 
+  # rubocop:disable Style/MultilineBlockChain
   def call
     new_apartments =
       scrape_all
@@ -19,11 +20,14 @@ class GetNewApartments
       .each(&:save!)
 
     Receiver.all.each do |receiver|
-      new_apartments.each do |apartment|
-        notify_about_apartment.call(receiver, apartment) if matches_preferences?(receiver, apartment)
+      new_apartments.select do |apartment|
+        matches_preferences?(receiver, apartment)
+      end.each do |apartment|
+        notify_about_apartment.call(receiver, apartment)
       end
     end
   end
+  # rubocop:enable Style/MultilineBlockChain
 
   private
 
