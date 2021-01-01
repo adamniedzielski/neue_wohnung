@@ -12,7 +12,8 @@ class ScrapeAll
       Scraper::StadtUndLand.new,
       Scraper::Vaterland.new,
       Scraper::Gesobau.new,
-      Scraper::Howoge.new
+      Scraper::Howoge.new,
+      Scraper::Bbg.new
     ]
   )
     self.scrapers = scrapers
