@@ -1,7 +1,8 @@
 # neue_wohnung
 
 This is an application that scrapes apartment offers from websites of
-Wohnungsbaugesellschaften in Berlin and sends notifications about them.
+Wohnungsbaugesellschaften and Wohnungsgenossenschaften in Berlin and
+sends notifications about them.
 
 ## Installation
 
