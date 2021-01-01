@@ -19,7 +19,15 @@ class ScrapeAll
   end
 
   def call
-    scrapers.flat_map(&:call)
+    scrapers.map do |scraper|
+      scraper.call
+    rescue OpenSSL::SSL::SSLError, Net::OpenTimeout, Net::ReadTimeout, SocketError => e
+      Bugsnag.notify(e) do |report|
+        report.severity = "warning"
+      end
+
+      []
+    end.flatten
   end
 
   private
