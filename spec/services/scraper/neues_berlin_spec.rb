@@ -29,38 +29,29 @@ RSpec.describe Scraper::NeuesBerlin do
       .to eq "Ahrenshooper Str. 38 13051 Berlin"
   end
 
-  # it "assigns external identifier" do
-  #   http_client = MockHTTPClient.new("gewobag.html")
-  #   service = Scraper::Gewobag.new(http_client: http_client)
-  #   result = service.call
+  it "assigns external identifier" do
+    http_client = MockHTTPClient.new("neues_berlin.html")
+    service = Scraper::NeuesBerlin.new(http_client: http_client)
+    result = service.call
 
-  #   expect(result.first.external_id).to eq "gewobag-43925"
-  # end
+    expect(result.first.external_id).to eq "neues-berlin-https://www.neues-berlin.de/fileadmin/angebote/cd3bf0c34d407c563a7a90f7a4f47f94.pdf"
+  end
 
-  # it "gets link to the full offer" do
-  #   http_client = MockHTTPClient.new("gewobag.html")
-  #   service = Scraper::Gewobag.new(http_client: http_client)
-  #   result = service.call
+  it "gets link to the full offer" do
+    http_client = MockHTTPClient.new("neues_berlin.html")
+    service = Scraper::NeuesBerlin.new(http_client: http_client)
+    result = service.call
 
-  #   expect(result.first.properties.fetch("url"))
-  #     .to eq "https://www.gewobag.de/fuer-mieter-und-mietinteressenten/mietangebote/7100-74806-0305-0076/"
-  # end
+    expect(result.first.properties.fetch("url"))
+      .to eq "https://www.neues-berlin.de/fileadmin/angebote/cd3bf0c34d407c563a7a90f7a4f47f94.pdf"
+  end
 
-  # it "gets the number of rooms" do
-  #   http_client = MockHTTPClient.new("gewobag.html")
-  #   service = Scraper::Gewobag.new(http_client: http_client)
-  #   result = service.call
+  it "gets the number of rooms" do
+    http_client = MockHTTPClient.new("neues_berlin.html")
+    service = Scraper::NeuesBerlin.new(http_client: http_client)
+    result = service.call
 
-  #   expect(result.first.properties.fetch("rooms_number"))
-  #     .to eq 3
-  # end
-
-  # it "gets the WBS status" do
-  #   http_client = MockHTTPClient.new("gewobag.html")
-  #   service = Scraper::Gewobag.new(http_client: http_client)
-  #   result = service.call
-
-  #   expect(result.first.properties.fetch("wbs"))
-  #     .to eq false
-  # end
+    expect(result.first.properties.fetch("rooms_number"))
+      .to eq 1
+  end
 end
