@@ -13,7 +13,8 @@ class ScrapeAll
       Scraper::Vaterland.new,
       Scraper::Gesobau.new,
       Scraper::Howoge.new,
-      Scraper::Bbg.new
+      Scraper::Bbg.new,
+      Scraper::NeuesBerlin.new
     ]
   )
     self.scrapers = scrapers
