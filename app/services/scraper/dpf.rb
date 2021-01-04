@@ -38,7 +38,7 @@ module Scraper
         element.text.match(/(\d*).*Zimmer/)
       end
 
-      Integer(element_with_data.at(".immo-data").text.strip)
+      Float(element_with_data.at(".immo-data").text.strip).round(half: :down)
     end
   end
 end

@@ -55,6 +55,15 @@ RSpec.describe Scraper::Dpf do
       .to eq 2
   end
 
+  it "rounds down the number of rooms when there are half rooms" do
+    http_client = MockHTTPClient.new("dpf_half_room.html")
+    service = Scraper::Dpf.new(http_client: http_client)
+    result = service.call
+
+    expect(result.fourth.properties.fetch("rooms_number"))
+      .to eq 2
+  end
+
   it "gets the WBS status when the listing is without WBS" do
     http_client = MockHTTPClient.new("dpf.html")
     service = Scraper::Dpf.new(http_client: http_client)
