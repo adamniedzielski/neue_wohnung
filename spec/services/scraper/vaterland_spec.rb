@@ -56,4 +56,13 @@ RSpec.describe Scraper::Vaterland do
     expect(result.first.properties.fetch("rooms_number"))
       .to eq 2
   end
+
+  it "correctly parses the number of rooms for half rooms" do
+    http_client = MockHTTPClient.new("vaterland_half_room.html")
+    service = Scraper::Vaterland.new(http_client: http_client)
+    result = service.call
+
+    expect(result.first.properties.fetch("rooms_number"))
+      .to eq 1
+  end
 end

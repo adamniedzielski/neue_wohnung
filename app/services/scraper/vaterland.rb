@@ -23,9 +23,14 @@ module Scraper
         properties: {
           address: listing.css("th").text.split(" | ").take(2).join(", "),
           url: URL,
-          rooms_number: Integer(listing.css("th").text.match(/(\d+)-Zimmer-Wohnung/)[1])
+          rooms_number: rooms_number(listing)
         }
       )
+    end
+
+    def rooms_number(listing)
+      text = listing.css("th").text.match(/(\d+(,5)?)-Zimmer-Wohnung/)[1]
+      Float(text.gsub(",", ".")).round(half: :down)
     end
   end
 end
