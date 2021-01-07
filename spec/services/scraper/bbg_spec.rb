@@ -12,30 +12,54 @@ RSpec.describe Scraper::Bbg do
     expect(result.size).to eq 0
   end
 
-  it "sends Bugnsnag notification when there's some change in HTML" do
-    http_client = MockHTTPClient.new("bbg_different.html")
-    bugnsnag_client = class_double(Bugsnag, notify: nil)
-    service = Scraper::Bbg.new(
-      http_client: http_client,
-      bugsnag_client: bugnsnag_client
-    )
+  it "gets multiple apartments when they are available" do
+    http_client = MockHTTPClient.new("bbg.html")
+    service = Scraper::Bbg.new(http_client: http_client)
+    result = service.call
 
-    service.call
-
-    expect(bugnsnag_client)
-      .to have_received(:notify).with(Scraper::Bbg::ContentChanged)
+    expect(result.size).to eq 2
   end
 
-  it "does not send Bugnsnag notification when there's a message about no flats" do
-    http_client = MockHTTPClient.new("bbg_empty.html")
-    bugnsnag_client = class_double(Bugsnag, notify: nil)
-    service = Scraper::Bbg.new(
-      http_client: http_client,
-      bugsnag_client: bugnsnag_client
-    )
+  it "returns Apartment instances" do
+    http_client = MockHTTPClient.new("bbg.html")
+    service = Scraper::Bbg.new(http_client: http_client)
+    result = service.call
 
-    service.call
+    expect(result.first.class).to eq Apartment
+  end
 
-    expect(bugnsnag_client).not_to have_received(:notify)
+  it "gets apartment address" do
+    http_client = MockHTTPClient.new("bbg.html")
+    service = Scraper::Bbg.new(http_client: http_client)
+    result = service.call
+
+    expect(result.first.properties.fetch("address"))
+      .to eq "Mariendorfer Damm 8 12109 Berlin"
+  end
+
+  it "assigns external identifier" do
+    http_client = MockHTTPClient.new("bbg.html")
+    service = Scraper::Bbg.new(http_client: http_client)
+    result = service.call
+
+    expect(result.first.external_id).to eq "bbg-117/116/181"
+  end
+
+  it "gets link to the full offer" do
+    http_client = MockHTTPClient.new("bbg.html")
+    service = Scraper::Bbg.new(http_client: http_client)
+    result = service.call
+
+    expect(result.first.properties.fetch("url"))
+      .to eq "https://bbg-eg.de/angebote/wohnungen-und-gewerbe/"
+  end
+
+  it "gets the number of rooms" do
+    http_client = MockHTTPClient.new("bbg.html")
+    service = Scraper::Bbg.new(http_client: http_client)
+    result = service.call
+
+    expect(result.first.properties.fetch("rooms_number"))
+      .to eq 2
   end
 end
