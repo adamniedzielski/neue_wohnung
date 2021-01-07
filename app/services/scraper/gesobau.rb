@@ -14,6 +14,9 @@ module Scraper
     def call
       page = Nokogiri::HTML(http_client.get(LIST_URL).body)
       second_list = page.css(".tx-openimmo.list")[1]
+
+      return [] if second_list.blank?
+
       second_list.css(".tab-pane.active .list_item").map do |listing|
         parse(listing)
       end
