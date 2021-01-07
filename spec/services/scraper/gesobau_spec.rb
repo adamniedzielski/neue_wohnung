@@ -54,4 +54,12 @@ RSpec.describe Scraper::Gesobau do
     expect(result.first.properties.fetch("rooms_number"))
       .to eq 1
   end
+
+  it "handles the loading error on Gesobau side" do
+    http_client = MockHTTPClient.new("gesobau_error.html")
+    service = Scraper::Gesobau.new(http_client: http_client)
+    result = service.call
+
+    expect(result.size).to eq 0
+  end
 end
