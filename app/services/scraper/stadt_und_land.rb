@@ -13,12 +13,19 @@ module Scraper
 
     def call
       page = Nokogiri::HTML(http_client.get(LIST_URL).body)
-      page.css(".SP-TeaserList__item").map { |listing| parse(listing) }
+      page
+        .css(".SP-TeaserList__item")
+        .select { |listing| apartment?(listing) }
+        .map { |listing| parse(listing) }
     end
 
     private
 
     attr_accessor :http_client
+
+    def apartment?(listing)
+      listing.text.exclude?("Objekt-Typ:Garage")
+    end
 
     def parse(listing)
       Apartment.new(
