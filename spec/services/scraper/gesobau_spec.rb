@@ -62,4 +62,20 @@ RSpec.describe Scraper::Gesobau do
 
     expect(result.size).to eq 0
   end
+
+  it "gets the WBS status when WBS is required" do
+    http_client = MockHTTPClient.new("gesobau_wbs.html")
+    service = Scraper::Gesobau.new(http_client: http_client)
+    result = service.call
+
+    expect(result.first.properties.fetch("wbs")).to eq true
+  end
+
+  it "gets the WBS status when WBS is not required" do
+    http_client = MockHTTPClient.new("gesobau_wbs.html")
+    service = Scraper::Gesobau.new(http_client: http_client)
+    result = service.call
+
+    expect(result.second.properties.fetch("wbs")).to eq false
+  end
 end
