@@ -32,7 +32,8 @@ module Scraper
         properties: {
           address: listing.css(".list_item-location").text,
           url: url(listing),
-          rooms_number: rooms_number(listing)
+          rooms_number: rooms_number(listing),
+          wbs: listing.at(".list_item-title a").text.include?("WBS")
         }
       )
     end
