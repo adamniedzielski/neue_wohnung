@@ -61,5 +61,11 @@ heroku console
 and then:
 
 ```ruby
-Receiver.create!(name: "just a label", telegram_chat_id: "your_chat_id", include_wbs: true, minimum_rooms_number: 1, maximum_rooms_number: 10)
+Receiver.create!(
+  name: "just a label",
+  telegram_chat_id: "your_chat_id",
+  include_wbs: true,
+  minimum_rooms_number: 1,
+  maximum_rooms_number: 10
+)
 ```
