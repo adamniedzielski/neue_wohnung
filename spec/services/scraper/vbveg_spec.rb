@@ -35,7 +35,7 @@ RSpec.describe Scraper::Vbveg do
     result = service.call
 
     expect(result.first.properties.fetch("url"))
-      .to eq "https://www.bg-vaterland.de/index.php?id=31"
+      .to eq "https://www.vbveg.de/wohnungsangebote.html"
   end
 
   it "assigns external identifier" do
@@ -44,7 +44,7 @@ RSpec.describe Scraper::Vbveg do
     result = service.call
 
     expect(result.first.external_id).to eq(
-      "vaterland-Manteuffelstraße 2 | 12103 Berlin | 2-Zimmer-Wohnung | ca. 58,04 qm | 4. OG rechts"
+      "vbveg-Hussitenstr. 7, 13355 Berlin-484.81"
     )
   end
 
@@ -72,6 +72,6 @@ RSpec.describe Scraper::Vbveg do
     result = service.call
 
     expect(result.first.properties.fetch("warm_rent"))
-      .to eq BigDecimal("484.81")
+      .to eq "484.81"
   end
 end
