@@ -3,19 +3,22 @@
 class ScrapeAll
   def initialize(
     scrapers: [
-      Scraper::Gewobag.new,
-      Scraper::Wbm.new,
-      Scraper::Dpf.new,
-      Scraper::WbgFriedrichshain.new,
+      Scraper::Bbg.new,
       Scraper::Degewo.new,
+      Scraper::Dpf.new,
       Scraper::EwgPankow.new,
+      Scraper::Gesobau.new,
+      Scraper::Gewobag.new,
+      Scraper::Howoge.new,
+      Scraper::MaerkischeScholle.new,
+      Scraper::Mlbaugenossen.new,
+      Scraper::NeuesBerlin.new,
       Scraper::StadtUndLand.new,
       Scraper::Vaterland.new,
-      Scraper::Gesobau.new,
-      Scraper::Howoge.new,
-      Scraper::Bbg.new,
-      Scraper::NeuesBerlin.new,
-      Scraper::WbgHub.new
+      Scraper::WbgFriedrichshain.new,
+      Scraper::WbgHub.new,
+      Scraper::WbgZentrum.new,
+      Scraper::Wbm.new
     ]
   )
     self.scrapers = scrapers
