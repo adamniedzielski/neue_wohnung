@@ -10,11 +10,14 @@ class ScrapeAll
       Scraper::Gesobau.new,
       Scraper::Gewobag.new,
       Scraper::Howoge.new,
+      Scraper::MaerkischeScholle.new,
+      Scraper::Mlbaugenossen.new,
       Scraper::NeuesBerlin.new,
       Scraper::StadtUndLand.new,
       Scraper::Vaterland.new,
       Scraper::WbgFriedrichshain.new,
       Scraper::WbgHub.new,
+      Scraper::WbgZentrum.new,
       Scraper::Wbm.new
     ]
   )
