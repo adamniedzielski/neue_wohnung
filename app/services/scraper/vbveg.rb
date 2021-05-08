@@ -10,6 +10,8 @@ module Scraper
 
     def call
       page = Nokogiri::HTML(http_client.get(URL).body)
+      return [] if page.text.include?("Derzeit stehen keine Wohnungsangebote zur Verfügung")
+
       page.css("#article-127 .ce_text.block").map { |listing| parse(listing) }
     end
 

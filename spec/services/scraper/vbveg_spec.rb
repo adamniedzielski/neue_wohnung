@@ -74,4 +74,12 @@ RSpec.describe Scraper::Vbveg do
     expect(result.first.properties.fetch("warm_rent"))
       .to eq "484.81"
   end
+
+  it "returns zero apartments when the page is empty" do
+    http_client = MockHTTPClient.new("vbveg_empty.html")
+    service = Scraper::Vbveg.new(http_client: http_client)
+    result = service.call
+
+    expect(result.size).to eq 0
+  end
 end
