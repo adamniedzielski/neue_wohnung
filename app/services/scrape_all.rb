@@ -15,6 +15,7 @@ class ScrapeAll
       Scraper::NeuesBerlin.new,
       Scraper::StadtUndLand.new,
       Scraper::Vaterland.new,
+      Scraper::Vbveg.new,
       Scraper::WbgFriedrichshain.new,
       Scraper::WbgHub.new,
       Scraper::WbgZentrum.new,
