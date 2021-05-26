@@ -37,7 +37,7 @@ class ScrapeAll
       end
 
       []
-    rescue => e
+    rescue StandardError => e
       bugsnag_client.notify(e)
       []
     end.flatten
