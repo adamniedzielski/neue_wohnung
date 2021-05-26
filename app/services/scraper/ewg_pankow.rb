@@ -46,7 +46,7 @@ module Scraper
     end
 
     def rooms_number(listing)
-      Integer(listing.css(".elementor-post__excerpt").text.match(/(\d*).*Zimmer/)[1])
+      Integer(listing.css(".elementor-post__title").text.strip.match(/(\d*).*Zimmer/)[1])
     end
   end
 end

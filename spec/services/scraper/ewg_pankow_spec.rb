@@ -62,4 +62,13 @@ RSpec.describe Scraper::EwgPankow do
     expect(result.first.properties.fetch("rooms_number"))
       .to eq 3
   end
+
+  it "gets the number of rooms when they are only in title" do
+    http_client = MockHTTPClient.new("ewg_pankow_rooms_in_title.html")
+    service = Scraper::EwgPankow.new(http_client: http_client)
+    result = service.call
+
+    expect(result.first.properties.fetch("rooms_number"))
+      .to eq 2
+  end
 end
