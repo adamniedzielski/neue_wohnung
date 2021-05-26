@@ -19,8 +19,32 @@ RSpec.describe ScrapeAll do
     first_scraper = instance_double(Scraper::Degewo)
     allow(first_scraper).to receive(:call) { raise SocketError }
     second_scraper = instance_double(Scraper::Gewobag, call: [apartment])
-    service = ScrapeAll.new(scrapers: [first_scraper, second_scraper])
+
+    bugsnag_client = class_double(Bugsnag, notify: nil)
+
+    service = ScrapeAll.new(
+      scrapers: [first_scraper, second_scraper],
+      bugsnag_client: bugsnag_client
+    )
 
     expect(service.call).to eq [apartment]
+    expect(bugsnag_client).to have_received(:notify)
+  end
+
+  it "rescues all unhandled exceptions" do
+    apartment = Apartment.new
+    first_scraper = instance_double(Scraper::Degewo)
+    allow(first_scraper).to receive(:call) { raise NoMethodError }
+    second_scraper = instance_double(Scraper::Gewobag, call: [apartment])
+
+    bugsnag_client = class_double(Bugsnag, notify: nil)
+
+    service = ScrapeAll.new(
+      scrapers: [first_scraper, second_scraper],
+      bugsnag_client: bugsnag_client
+    )
+
+    expect(service.call).to eq [apartment]
+    expect(bugsnag_client).to have_received(:notify)
   end
 end
