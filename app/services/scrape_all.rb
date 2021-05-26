@@ -20,9 +20,11 @@ class ScrapeAll
       Scraper::WbgHub.new,
       Scraper::WbgZentrum.new,
       Scraper::Wbm.new
-    ]
+    ],
+    bugsnag_client: Bugsnag
   )
     self.scrapers = scrapers
+    self.bugsnag_client = bugsnag_client
   end
 
   def call
@@ -30,15 +32,18 @@ class ScrapeAll
       scraper.call
     rescue Errno::ECONNREFUSED, Errno::ECONNRESET, OpenSSL::SSL::SSLError,
            Net::OpenTimeout, Net::ReadTimeout, SocketError => e
-      Bugsnag.notify(e) do |report|
+      bugsnag_client.notify(e) do |report|
         report.severity = "warning"
       end
 
+      []
+    rescue StandardError => e
+      bugsnag_client.notify(e)
       []
     end.flatten
   end
 
   private
 
-  attr_accessor :scrapers
+  attr_accessor :scrapers, :bugsnag_client
 end
