@@ -24,7 +24,7 @@ module Scraper
     attr_accessor :http_client
 
     def apartment?(listing)
-      listing.text.exclude?("Objekt-Typ:Garage")
+      listing.text.exclude?("Objekt-Typ:Garage") && listing.text.exclude?("Objekt-Typ:Parkplatz")
     end
 
     def parse(listing)
