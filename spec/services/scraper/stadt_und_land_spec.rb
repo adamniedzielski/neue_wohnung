@@ -80,4 +80,12 @@ RSpec.describe Scraper::StadtUndLand do
 
     expect(result.size).to eq 9
   end
+
+  it "ignores listing for parking place" do
+    http_client = MockHTTPClient.new("stadt_und_land_parking_place.html")
+    service = Scraper::StadtUndLand.new(http_client: http_client)
+    result = service.call
+
+    expect(result.size).to eq 6
+  end
 end
