@@ -16,6 +16,7 @@ class NotifyAboutApartment
         WBS: #{format_wbs_status(apartment)}
 
         #{apartment.properties.fetch('url', 'no link available')}
+        #{format_google_maps_link(apartment)}
       HEREDOC
     )
   end
@@ -23,6 +24,19 @@ class NotifyAboutApartment
   private
 
   attr_accessor :send_telegram_message
+
+  def format_google_maps_link(apartment)
+    return "" unless apartment.properties.key?("address")
+    return "" unless apartment.properties["address"].present?
+
+    params = apartment.properties["address"]
+                      .gsub(" ", "+")
+                      .gsub(",", "+")
+                      .gsub("/", "+")
+                      .gsub("|", "+")
+
+    "https://www.google.com/maps/search/?api=1&query=#{params}"
+  end
 
   def format_wbs_status(apartment)
     return "?" unless apartment.properties.key?("wbs")
