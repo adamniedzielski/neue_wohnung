@@ -3,7 +3,7 @@
 module Scraper
   class Wbm
     BASE_URL = "https://www.wbm.de"
-    LIST_URL = "#{BASE_URL}/wohnungen-berlin/angebote/"
+    LIST_URL = "#{BASE_URL}/wohnungen-berlin/angebote/".freeze
 
     def initialize(http_client: HTTParty)
       self.http_client = http_client

@@ -4,7 +4,7 @@ module Scraper
   class Degewo
     BASE_URL = "https://immosuche.degewo.de"
     # rubocop:disable Layout/LineLength
-    LIST_URL = "#{BASE_URL}/de/search.json?utf8=%E2%9C%93&property_type_id=1&categories%5B%5D=1&wbs_required=0&order=rent_total_without_vat_asc"
+    LIST_URL = "#{BASE_URL}/de/search.json?utf8=%E2%9C%93&property_type_id=1&categories%5B%5D=1&wbs_required=0&order=rent_total_without_vat_asc".freeze
     # rubocop:enable Layout/LineLength
 
     def initialize(http_client: HTTParty)

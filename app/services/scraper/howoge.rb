@@ -4,7 +4,7 @@ module Scraper
   class Howoge
     BASE_URL = "https://www.howoge.de"
     # rubocop:disable Layout/LineLength
-    LIST_URL = "#{BASE_URL}/?type=999&tx_howsite_json_list[action]=immoList&tx_howsite_json_list[wbs]=wbs-not-necessary&tx_howsite_json_list[limit]=100"
+    LIST_URL = "#{BASE_URL}/?type=999&tx_howsite_json_list[action]=immoList&tx_howsite_json_list[wbs]=wbs-not-necessary&tx_howsite_json_list[limit]=100".freeze
     # rubocop:enable Layout/LineLength
 
     def initialize(http_client: HTTParty)
