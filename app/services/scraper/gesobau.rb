@@ -4,7 +4,7 @@ module Scraper
   class Gesobau
     BASE_URL = "https://www.gesobau.de"
     # rubocop:disable Layout/LineLength
-    LIST_URL = "#{BASE_URL}/mieten/wohnungssuche.html?tx_kesearch_pi1%5Bsword%5D=&tx_kesearch_pi1%5Bzimmer%5D=&tx_kesearch_pi1%5BflaecheMin%5D=&tx_kesearch_pi1%5BmieteMax%5D=&tx_kesearch_pi1%5Bpage%5D=1&tx_kesearch_pi1%5BresetFilters%5D=0&tx_kesearch_pi1%5BsortByField%5D=&tx_kesearch_pi1%5BsortByDir%5D="
+    LIST_URL = "#{BASE_URL}/mieten/wohnungssuche.html?tx_kesearch_pi1%5Bsword%5D=&tx_kesearch_pi1%5Bzimmer%5D=&tx_kesearch_pi1%5BflaecheMin%5D=&tx_kesearch_pi1%5BmieteMax%5D=&tx_kesearch_pi1%5Bpage%5D=1&tx_kesearch_pi1%5BresetFilters%5D=0&tx_kesearch_pi1%5BsortByField%5D=&tx_kesearch_pi1%5BsortByDir%5D=".freeze
     # rubocop:enable Layout/LineLength
 
     def initialize(http_client: HTTParty)

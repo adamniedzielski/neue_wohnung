@@ -4,7 +4,7 @@ module Scraper
   class StadtUndLand
     BASE_URL = "https://www.stadtundland.de"
     # rubocop:disable Layout/LineLength
-    LIST_URL = "#{BASE_URL}/Wohnungssuche/Wohnungssuche.php?form=stadtundland-expose-search-1.form&sp%3AroomsFrom%5B%5D=&sp%3AroomsTo%5B%5D=&sp%3ArentPriceFrom%5B%5D=&sp%3ArentPriceTo%5B%5D=&sp%3AareaFrom%5B%5D=&sp%3AareaTo%5B%5D=&sp%3Afeature%5B%5D=__last__&action=submit"
+    LIST_URL = "#{BASE_URL}/Wohnungssuche/Wohnungssuche.php?form=stadtundland-expose-search-1.form&sp%3AroomsFrom%5B%5D=&sp%3AroomsTo%5B%5D=&sp%3ArentPriceFrom%5B%5D=&sp%3ArentPriceTo%5B%5D=&sp%3AareaFrom%5B%5D=&sp%3AareaTo%5B%5D=&sp%3Afeature%5B%5D=__last__&action=submit".freeze
     # rubocop:enable Layout/LineLength
 
     def initialize(http_client: HTTParty)
