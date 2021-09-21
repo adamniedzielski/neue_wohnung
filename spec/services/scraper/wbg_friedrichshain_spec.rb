@@ -54,4 +54,12 @@ RSpec.describe Scraper::WbgFriedrichshain do
     expect(result.first.properties.fetch("rooms_number"))
       .to eq 2
   end
+
+  it "skips the listing if it is a business space" do
+    http_client = MockHTTPClient.new("wbg_friedrichshain_business.html")
+    service = Scraper::WbgFriedrichshain.new(http_client: http_client)
+    result = service.call
+
+    expect(result.size).to eq 0
+  end
 end
