@@ -11,7 +11,10 @@ module Scraper
 
     def call
       page = Nokogiri::HTML(http_client.get(LIST_URL).body)
-      page.css(".jea_item").map { |listing| parse(listing) }
+      page
+        .css(".jea_item")
+        .reject { |listing| listing.text.include?("Gewerbefläche") }
+        .map { |listing| parse(listing) }
     end
 
     private
