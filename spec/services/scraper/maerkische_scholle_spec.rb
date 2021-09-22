@@ -61,4 +61,20 @@ RSpec.describe Scraper::MaerkischeScholle do
 
     expect(http_client.default_options.fetch(:verify)).to eq false
   end
+
+  it "gets the WBS status when WBS is not required" do
+    http_client = MockHTTPClient.new("maerkische_scholle.html")
+    service = Scraper::MaerkischeScholle.new(http_client: http_client)
+    result = service.call
+
+    expect(result.second.properties.fetch("wbs")).to eq false
+  end
+
+  it "gets the WBS status when WBS is required" do
+    http_client = MockHTTPClient.new("maerkische_scholle_wbs.html")
+    service = Scraper::MaerkischeScholle.new(http_client: http_client)
+    result = service.call
+
+    expect(result.first.properties.fetch("wbs")).to eq true
+  end
 end
