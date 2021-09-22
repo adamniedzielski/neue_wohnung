@@ -28,7 +28,8 @@ module Scraper
         properties: {
           address: listing.css("p strong").first.children.first.text,
           url: URL,
-          rooms_number: Integer(listing.css("h2").text.match(/(\d+)\sZimmer/)[1])
+          rooms_number: Integer(listing.css("h2").text.match(/(\d+)\sZimmer/)[1]),
+          wbs: listing.css("h2").text.include?("WBS")
         }
       )
     end
