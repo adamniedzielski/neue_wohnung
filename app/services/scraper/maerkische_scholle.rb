@@ -2,9 +2,14 @@
 
 module Scraper
   class MaerkischeScholle
+    class SkipSSLVerificationClient
+      include HTTParty
+      default_options.update(verify: false)
+    end
+
     URL = "https://www.maerkische-scholle.de/wohnungsangebote.html"
 
-    def initialize(http_client: HTTParty)
+    def initialize(http_client: SkipSSLVerificationClient)
       self.http_client = http_client
     end
 

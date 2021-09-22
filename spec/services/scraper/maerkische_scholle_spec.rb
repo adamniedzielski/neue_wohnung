@@ -55,4 +55,10 @@ RSpec.describe Scraper::MaerkischeScholle do
     expect(result.first.properties.fetch("rooms_number"))
       .to eq 2
   end
+
+  it "skips SSL verification because of 'unable to get local issuer certificate' error" do
+    http_client = Scraper::MaerkischeScholle::SkipSSLVerificationClient
+
+    expect(http_client.default_options.fetch(:verify)).to eq false
+  end
 end
