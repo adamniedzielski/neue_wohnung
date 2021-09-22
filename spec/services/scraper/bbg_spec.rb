@@ -62,4 +62,12 @@ RSpec.describe Scraper::Bbg do
     expect(result.first.properties.fetch("rooms_number"))
       .to eq 2
   end
+
+  it "returns apartment even when the number of rooms is not available" do
+    http_client = MockHTTPClient.new("bbg_no_rooms.html")
+    service = Scraper::Bbg.new(http_client: http_client)
+    result = service.call
+
+    expect(result.first.properties.key?("rooms_number")).to eq false
+  end
 end
