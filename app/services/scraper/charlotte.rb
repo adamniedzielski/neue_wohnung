@@ -10,12 +10,19 @@ module Scraper
 
     def call
       page = Nokogiri::HTML(http_client.get(URL).body)
-      page.css(".apartment-lists > .image-block-content").map { |listing| parse(listing) }
+      page
+        .css(".apartment-lists > .image-block-content")
+        .reject { |listing| only_for_members?(listing) }
+        .map { |listing| parse(listing) }
     end
 
     private
 
     attr_accessor :http_client
+
+    def only_for_members?(listing)
+      listing.text.include?("Nur für Mitglieder")
+    end
 
     def parse(listing)
       Apartment.new(

@@ -9,7 +9,7 @@ RSpec.describe Scraper::Charlotte do
     service = Scraper::Charlotte.new(http_client: http_client)
     result = service.call
 
-    expect(result.size).to eq 11
+    expect(result.size).to eq 10
   end
 
   it "returns Apartment instances" do
@@ -62,5 +62,13 @@ RSpec.describe Scraper::Charlotte do
 
     expect(result.third.properties.fetch("rooms_number"))
       .to eq 2
+  end
+
+  it "filters out offers only for members" do
+    http_client = MockHTTPClient.new("charlotte.html")
+    service = Scraper::Charlotte.new(http_client: http_client)
+    result = service.call
+
+    expect(result.map(&:external_id)).not_to include("charlotte-210-0109")
   end
 end
