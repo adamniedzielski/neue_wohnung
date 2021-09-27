@@ -60,7 +60,7 @@ RSpec.describe Scraper::Charlotte do
     service = Scraper::Charlotte.new(http_client: http_client)
     result = service.call
 
-    expect(result.first.properties.fetch("rooms_number"))
+    expect(result.third.properties.fetch("rooms_number"))
       .to eq 2
   end
 end

@@ -18,19 +18,12 @@ module Scraper
     attr_accessor :http_client
 
     def parse(listing)
-      # properties = {
-      #   address: listing.css("td")[3].children.map(&:text).reject(&:blank?).join(" "),
-      #   url: URL
-      # }
-
-      # rooms_number = listing.css("td")[1].text
-      # properties.merge!(rooms_number: Integer(rooms_number)) if rooms_number.present?
-
       Apartment.new(
-        external_id: "charlotte-#{listing.css(".header-green").text.match(/WOHNUNGS-Nr\.\s(.+)/)[1]}",
+        external_id: "charlotte-#{listing.css('.header-green').text.match(/WOHNUNGS-Nr\.\s(.+)/)[1]}",
         properties: {
           address: listing.css(".item-wrp")[1].text.gsub(/\s+/, " ").strip,
-          url: URL
+          url: URL,
+          rooms_number: Integer(listing.text.match(/Zimmer:\s(\d+)/)[1])
         }
       )
     end
