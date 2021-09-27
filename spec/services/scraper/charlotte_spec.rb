@@ -87,4 +87,20 @@ RSpec.describe Scraper::Charlotte do
 
     expect(result[5].properties.fetch("wbs")).to eq true
   end
+
+  it "gets the warm rent when warm rent is provided" do
+    http_client = MockHTTPClient.new("charlotte.html")
+    service = Scraper::Charlotte.new(http_client: http_client)
+    result = service.call
+
+    expect(result.first.properties.fetch("warm_rent")).to eq "444.81"
+  end
+
+  it "gets the cold rent when cold rent is provided" do
+    http_client = MockHTTPClient.new("charlotte.html")
+    service = Scraper::Charlotte.new(http_client: http_client)
+    result = service.call
+
+    expect(result[6].properties.fetch("cold_rent")).to eq "515.06"
+  end
 end

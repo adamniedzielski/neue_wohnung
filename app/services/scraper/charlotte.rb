@@ -25,15 +25,44 @@ module Scraper
     end
 
     def parse(listing)
+      properties = {
+        address: address(listing),
+        url: URL,
+        rooms_number: rooms_number(listing),
+        wbs: listing.text.include?("WBS erforderl")
+      }
+
+      properties.merge!(rent(listing))
+
       Apartment.new(
-        external_id: "charlotte-#{listing.css('.header-green').text.match(/WOHNUNGS-Nr\.\s(.+)/)[1]}",
-        properties: {
-          address: listing.css(".item-wrp")[1].text.gsub(/\s+/, " ").strip,
-          url: URL,
-          rooms_number: Integer(listing.text.match(/Zimmer:\s(\d+)/)[1]),
-          wbs: listing.text.include?("WBS erforderl")
-        }
+        external_id: external_id(listing),
+        properties: properties
       )
+    end
+
+    def address(listing)
+      listing.css(".item-wrp")[1].text.gsub(/\s+/, " ").strip
+    end
+
+    def rooms_number(listing)
+      Integer(listing.text.match(/Zimmer:\s(\d+)/)[1])
+    end
+
+    def rent(listing)
+      match_data = listing.text.match(
+        /Gesamtmiete in Euro: (?<value>\d+,\d{2})(?: €)?\s(?<type>kalt|warm)/
+      )
+      value = BigDecimal(match_data[:value].gsub(",", "."))
+
+      if match_data[:type] == "kalt"
+        { cold_rent: value }
+      else
+        { warm_rent: value }
+      end
+    end
+
+    def external_id(listing)
+      "charlotte-#{listing.css('.header-green').text.match(/WOHNUNGS-Nr\.\s(.+)/)[1]}"
     end
   end
 end
