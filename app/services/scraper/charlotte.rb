@@ -30,7 +30,8 @@ module Scraper
         properties: {
           address: listing.css(".item-wrp")[1].text.gsub(/\s+/, " ").strip,
           url: URL,
-          rooms_number: Integer(listing.text.match(/Zimmer:\s(\d+)/)[1])
+          rooms_number: Integer(listing.text.match(/Zimmer:\s(\d+)/)[1]),
+          wbs: listing.text.include?("WBS erforderl")
         }
       )
     end

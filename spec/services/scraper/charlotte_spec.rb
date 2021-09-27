@@ -71,4 +71,20 @@ RSpec.describe Scraper::Charlotte do
 
     expect(result.map(&:external_id)).not_to include("charlotte-210-0109")
   end
+
+  it "gets the WBS status when WBS is not required" do
+    http_client = MockHTTPClient.new("charlotte.html")
+    service = Scraper::Charlotte.new(http_client: http_client)
+    result = service.call
+
+    expect(result.first.properties.fetch("wbs")).to eq false
+  end
+
+  it "gets the WBS status when WBS is required" do
+    http_client = MockHTTPClient.new("charlotte.html")
+    service = Scraper::Charlotte.new(http_client: http_client)
+    result = service.call
+
+    expect(result[5].properties.fetch("wbs")).to eq true
+  end
 end
