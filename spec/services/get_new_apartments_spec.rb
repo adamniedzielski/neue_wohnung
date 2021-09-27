@@ -206,4 +206,18 @@ RSpec.describe GetNewApartments do
     expect(notify_about_apartment).not_to have_received(:call)
       .with(nonmatching_receiver, apartment)
   end
+
+  it "determines subdistrict for each scraped apartment" do
+    apartment = Apartment.new(external_id: "12345")
+    scrape_all = instance_double(ScrapeAll, call: [apartment])
+    determine_subdistrict = instance_double(DetermineSubdistrict, call: nil)
+    service = GetNewApartments.new(
+      scrape_all: scrape_all,
+      determine_subdistrict: determine_subdistrict
+    )
+
+    service.call
+
+    expect(determine_subdistrict).to have_received(:call).with(apartment)
+  end
 end
