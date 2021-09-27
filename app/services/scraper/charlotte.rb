@@ -29,7 +29,8 @@ module Scraper
         address: address(listing),
         url: URL,
         rooms_number: rooms_number(listing),
-        wbs: listing.text.include?("WBS erforderl")
+        wbs: listing.text.include?("WBS erforderl"),
+        size: size(listing)
       }
 
       properties.merge!(rent(listing))
@@ -45,7 +46,13 @@ module Scraper
     end
 
     def rooms_number(listing)
-      Integer(listing.text.match(/Zimmer:\s(\d+)/)[1])
+      Integer(listing.text.match(/Zimmer: (\d+)/)[1])
+    end
+
+    def size(listing)
+      BigDecimal(
+        listing.text.match(/Wohnfläche: (\d+,\d{2})/)[1].gsub(",", ".")
+      ).round
     end
 
     def rent(listing)

@@ -103,4 +103,13 @@ RSpec.describe Scraper::Charlotte do
 
     expect(result[6].properties.fetch("cold_rent")).to eq "515.06"
   end
+
+  it "gets the size of the apartment" do
+    http_client = MockHTTPClient.new("charlotte.html")
+    service = Scraper::Charlotte.new(http_client: http_client)
+    result = service.call
+
+    expect(result.first.properties.fetch("size")).to eq 52
+    expect(result.second.properties.fetch("size")).to eq 59
+  end
 end
