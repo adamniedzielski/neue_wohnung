@@ -4,6 +4,7 @@ class ScrapeAll
   def initialize(
     scrapers: [
       Scraper::Bbg.new,
+      Scraper::Charlotte.new,
       Scraper::Degewo.new,
       Scraper::Dpf.new,
       Scraper::EwgPankow.new,
