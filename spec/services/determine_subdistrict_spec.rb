@@ -46,4 +46,17 @@ RSpec.describe DetermineSubdistrict do
 
     expect(apartment.properties.key?("subdistrict")).to eq false
   end
+
+  it "assigns multiple subdistricts when zip code is ambiguous" do
+    apartment = Apartment.new(
+      properties: {
+        address: "Lessingstraße 18, 13158 Berlin"
+      }
+    )
+
+    DetermineSubdistrict.new.call(apartment)
+
+    expect(apartment.properties.fetch("subdistrict"))
+      .to eq ["Französisch Buchholz", "Rosenthal", "Wilhelmsruh"]
+  end
 end
