@@ -19,7 +19,7 @@ module Scraper
 
     def parse(listing)
       properties = {
-        address: listing.css("td")[3].children.map(&:text).reject(&:blank?).join(" "),
+        address: listing.css("td")[3].children.map(&:text).compact_blank.join(" "),
         url: URL
       }
 
