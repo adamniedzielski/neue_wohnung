@@ -28,3 +28,5 @@ RSpec/ExampleLength:
   Max: 50
 RSpec/MultipleExpectations:
   Enabled: false
+RSpec/BeEq:
+  Enabled: false
