@@ -7,7 +7,8 @@ AllCops:
   Exclude:
     - "bin/**/*"
     - "db/schema.rb"
-
+    - "vendor/**/*"
+    - "tmp/**/*"
 Style/StringLiterals:
   EnforcedStyle: double_quotes
 Style/Documentation:
