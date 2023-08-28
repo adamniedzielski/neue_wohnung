@@ -69,3 +69,5 @@ Receiver.create!(
   maximum_rooms_number: 10
 )
 ```
+
+
