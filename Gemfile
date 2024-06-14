@@ -20,7 +20,7 @@ gem "bootsnap", ">= 1.4.2", require: false
 
 gem "httparty"
 gem "nokogiri"
-gem "telegram-bot-ruby"
+gem "telegram-bot-ruby", "~> 0.19.2"
 gem "bugsnag"
 
 group :development, :test do
