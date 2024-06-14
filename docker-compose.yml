@@ -1,0 +1,25 @@
+version: "3.9"
+services:
+  web:
+    platform: linux/x86_64
+    build:
+      context: .
+      target: dev
+    env_file:
+      - .env.dev
+    stdin_open: true
+    tty: true
+    command: bundle exec rails server --binding 0.0.0.0
+    volumes:
+      - ".:/neue_wohnung"
+      - bundle:/bundle
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+  db:
+    image: "healthcheck/postgres:alpine"
+    environment:
+      POSTGRES_PASSWORD: db_password
+volumes:
+  bundle:
