@@ -6,9 +6,7 @@ class MockHTTPClient
   def initialize(response_filenames)
     self.responses = Array(response_filenames).map do |filename|
       Response.new(
-        File.read(
-          Rails.root.join("spec", "fixtures", filename)
-        )
+        Rails.root.join("spec", "fixtures", filename).read
       )
     end
     self.current_index = 0

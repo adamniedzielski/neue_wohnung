@@ -19,7 +19,7 @@ class GetNewApartments
       end
       .each(&:save!)
 
-    Receiver.all.each do |receiver|
+    Receiver.find_each do |receiver|
       new_apartments.select do |apartment|
         matches_preferences?(receiver, apartment)
       end.each do |apartment|
