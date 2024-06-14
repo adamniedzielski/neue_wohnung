@@ -5,7 +5,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby "3.0.2"
 
-gem "rails", "~> 6.1.0"
+gem "rails", "~> 7.1.3"
 # Use postgresql as the database for Active Record
 gem "pg", ">= 0.18", "< 2.0"
 # Use Puma as the app server
@@ -20,7 +20,7 @@ gem "bootsnap", ">= 1.4.2", require: false
 
 gem "httparty"
 gem "nokogiri"
-gem "telegram-bot-ruby"
+gem "telegram-bot-ruby", "~> 0.19.2"
 gem "bugsnag"
 
 group :development, :test do
